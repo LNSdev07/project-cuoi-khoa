@@ -1,0 +1,80 @@
+<app-header></app-header>
+<div class="row" [formGroup]="formRegister">
+  <div class="col-lg-10 col-xl-9 mx-auto">
+    <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+      <div class="card-img-left d-none d-md-flex">
+        <!-- Background image for card set in CSS! -->
+      </div>
+      <div class="card-body p-4 p-sm-5">
+        <h2 class="card-title text-center fw-light">Register</h2>
+        <form>
+
+          <div class="form-floating mb-3">
+            <label for="floatingInputUsername">Username</label>
+            <input formControlName="username" type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
+            <div *ngIf="f['username'].invalid && (f['username'].touched || f['username'].dirty)">
+              <p style="color: red">This is a required field!</p>
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <label for="floatingInputEmail">Email address</label>
+            <input formControlName="email" type="email" class="form-control" id="floatingInputEmail" placeholder="name@example.com">
+            <div *ngIf="f['email'].invalid && (f['email'].touched || f['email'].dirty) ">
+              <p *ngIf=" f['email'].hasError('required')" style="color: red">This is a required field!</p>
+              <p *ngIf=" f['email'].hasError('email')" style="color: red">Incorrect email format: Ex: abc@gmail.com!</p>
+            </div>
+          </div>
+
+          <hr>
+
+          <div class="form-floating mb-3">
+            <label for="floatingPassword">Password</label>
+            <input formControlName="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <div *ngIf="f['password'].invalid && (f['password'].touched || f['password'].dirty) ">
+              <p *ngIf=" f['password'].hasError('required')" style="color: red">This is a required field!</p>
+              <p *ngIf=" f['password'].hasError('minlength')" style="color: red">Password must be longer than 6 characters!</p>
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <label for="floatingPasswordConfirm">Confirm Password</label>
+            <input formControlName="password_again" type="password" class="form-control" id="floatingPasswordConfirm" placeholder="Confirm Password">
+
+            <div *ngIf="f['password_again'].invalid && (f['password_again'].touched || f['password_again'].dirty) ">
+              <p *ngIf=" f['password_again'].hasError('required')" style="color: red">This is a required field!</p>
+              <p *ngIf=" f['password_again'].hasError('minlength')" style="color: red">Password must be longer than 6 characters!</p>
+            </div>
+
+            <div *ngIf="f['password_again'].value != f['password'].value && !f['password_again'].hasError('required') ">
+              <p style="color: red">Enter the wrong password</p>
+            </div>
+
+          </div>
+
+          <div class="d-grid mb-2">
+            <button [disabled]="formRegister.invalid"  class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Register</button>
+          </div>
+
+          <a class="d-block text-center mt-2 " routerLink="/auth/login">Have an account? Sign In</a>
+
+          <hr class="my-4">
+
+          <div class="d-grid mb-2">
+            <button [disabled]="true" class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
+              <i class="fa fa-google-plus" aria-hidden="true"></i> Sign up with Google
+            </button>
+          </div>
+
+          <div class="d-grid">
+            <button [disabled]="true" class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
+              <i class="fa fa-facebook-official" aria-hidden="true"></i> Sign up with Facebook
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
