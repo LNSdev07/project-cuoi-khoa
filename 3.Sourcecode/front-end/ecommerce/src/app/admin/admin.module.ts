@@ -11,8 +11,7 @@ import { QuanLyDoanhThuComponent } from './quan-ly-doanh-thu/quan-ly-doanh-thu.c
 import { QuanLyKhachHangComponent } from './quan-ly-khach-hang/quan-ly-khach-hang.component';
 import { QuanLySanPhamComponent } from './quan-ly-san-pham/quan-ly-san-pham.component';
 import { QuanLySizeComponent } from './quan-ly-size/quan-ly-size.component';
-import {MatIconModule} from "@angular/material/icon";
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,7 @@ import {MatIconModule} from "@angular/material/icon";
     imports: [
         CommonModule,
         AdminRoutingModule,
-        MatIconModule
+        SharedModule,
     ]
 })
 export class AdminModule { }

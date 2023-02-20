@@ -23,7 +23,8 @@ const routes: Routes = [
       {path:'quan-ly-discount', component: QuanLyDiscountComponent},
       {path:'quan-ly-doanh-thu', component: QuanLyDoanhThuComponent},
       {path:'quan-ly-profile', component: ProfileAdminComponent},
-      {path:'**', component: QuanLyKhachHangComponent}
+      {path:'quan-ly-san-pham', component: QuanLySanPhamComponent},
+      {path:'**', component: ErrorComponent}
     ] }];
 
 @NgModule({
