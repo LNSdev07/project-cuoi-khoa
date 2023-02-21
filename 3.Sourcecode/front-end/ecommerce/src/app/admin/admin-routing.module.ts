@@ -15,6 +15,7 @@ import { QuanLySizeComponent } from './quan-ly-size/quan-ly-size.component';
 const routes: Routes = [
   { path: '', component: AdminComponent,
     children :[
+      {path:'', component: QuanLyKhachHangComponent},
       {path: 'quan-ly-khach-hang', component: QuanLyKhachHangComponent},
       {path:'quan-ly-san-pham', component: QuanLySanPhamComponent},
       {path:'quan-ly-danh-muc', component: QuanLyDanhMucComponent},

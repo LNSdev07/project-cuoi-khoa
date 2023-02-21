@@ -26,22 +26,4 @@ import java.util.List;
 @Api("moduls shop api")
 public class ProductController {
 
-    private final ProductService service;
-
-    @ApiOperation(value = "get list product with filter")
-    @GetMapping(value = "api/products")
-    public String findProduct(@RequestParam(name = "sorts", required = false, defaultValue = "3") String sorts,
-                              @RequestParam(name = "colors", required = false, defaultValue = "") String colors,
-                              @RequestParam(name = "sizes", required = false, defaultValue = "") String sizes,
-                              @RequestParam(name = "page", required = false, defaultValue = "1") String page ){
-        return service.findProductWithFilter(sorts, colors, sizes, page);
-
-    }
-
-
-    @PostMapping("api/products")
-    public PageResponse<ProductDTO> findProduct(@RequestBody @Valid PageRequest pageRequest){
-        return  service.findProduct(pageRequest);
-    }
-
 }

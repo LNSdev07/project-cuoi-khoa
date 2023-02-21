@@ -34,51 +34,6 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository repository;
 
-    private final Gson gson;
-
-    @Override
-    public String findProductWithFilter(String sorts, String colors, String sizes, String page) {
-        TableRespone<ProductDTO> response = new TableRespone<>();
-       try{
-           Integer pageIndex = Integer.parseInt(page.trim());
-           Pageable pageable = PageRequest.of(pageIndex -1, 9,
-                   Sort.Direction.fromString(sorts.equals("3") ? "asc": "desc"), "cost" );
-           int testEmptyColorCode = colors.isEmpty()? 1: 0;
-           int testEmptySize  =sizes.isEmpty()?1 :0;
-
-           String[] listColorCode = new String[0];
-           String[] listSizeCode = new String[0];
-           if(testEmptyColorCode ==0) {
-               listColorCode = colors.trim().split(",");
-           }
-           if(testEmptySize ==0){
-               listSizeCode = sizes.trim().split(",");
-           }
-
-           Page<ProductDB> pageProduct = repository.findProductWithFilter(pageable,
-                   testEmptyColorCode, List.of(listColorCode), testEmptySize, List.of(listSizeCode));
-
-           Response<ProductDTO> resp = new Response<>();
-           resp.setData(pageProduct.getContent().stream().map(ProductDTO::new).collect(Collectors.toList()));
-           resp.setTotal(pageProduct.getTotalElements());
-           resp.setTotalPage(pageProduct.getTotalPages());
-
-
-           response.setHttpCode(HttpStatus.OK.value());
-           response.setMessage(HttpStatus.OK.getReasonPhrase());
-           response.setData(resp);
-
-           return  gson.toJson(response);
-
-       }catch (Exception e){
-           e.printStackTrace();
-           response.setData(new Response<>());
-           response.setHttpCode(HttpStatus.BAD_REQUEST.value());
-           response.setMessage(HttpStatus.BAD_REQUEST.getReasonPhrase());
-           return  gson.toJson(response);
-       }
-    }
-
     @Override
     public Boolean deleteProductByCatagory(String id) {
             try{
