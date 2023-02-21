@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { SignUpService } from './service/sign-up.service';
 
 @Component({
   selector: 'app-signup',
@@ -9,7 +10,8 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class SignupComponent implements OnInit {
   formRegister!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+              private signUpService: SignUpService) { }
 
   ngOnInit(): void {
     this.buildForm();
