@@ -6,6 +6,7 @@ import {RouterLink} from "@angular/router";
 import {MatIconModule} from "@angular/material/icon";
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -23,6 +24,8 @@ import {MatButtonModule} from '@angular/material/button';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    
   ]
 })
 export class SharedModule { }
