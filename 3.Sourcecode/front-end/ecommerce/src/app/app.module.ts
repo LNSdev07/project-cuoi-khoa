@@ -10,7 +10,9 @@ import {AuthModule} from "./auth/auth.module";
 import {AdminModule} from "./admin/admin.module";
 import {ShopModule} from "./shop/shop.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './common/interceptor/auth.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent
@@ -22,9 +24,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AuthModule,
     AdminModule,
     ShopModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
