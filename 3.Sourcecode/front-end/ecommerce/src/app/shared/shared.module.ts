@@ -16,7 +16,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     CommonModule,
     RouterLink,
     MatIconModule,
-
+    MatButtonModule,
   ],
   exports: [
     HeaderComponent,
