@@ -4,7 +4,7 @@ import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.entities.product.Color;
 import com.t3h.ecommerce.pojo.dto.color.ColorDTO;
 import com.t3h.ecommerce.pojo.dto.color.PageColorRequest;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.repositories.ColorRepository;
 import com.t3h.ecommerce.service.ColorService;
 import org.modelmapper.ModelMapper;

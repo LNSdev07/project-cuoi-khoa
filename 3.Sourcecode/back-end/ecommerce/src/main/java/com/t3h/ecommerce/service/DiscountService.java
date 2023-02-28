@@ -3,7 +3,7 @@ package com.t3h.ecommerce.service;
 import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.pojo.dto.discount.DiscountDTO;
 import com.t3h.ecommerce.pojo.dto.discount.PageDiscountRequest;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface DiscountService {
 
