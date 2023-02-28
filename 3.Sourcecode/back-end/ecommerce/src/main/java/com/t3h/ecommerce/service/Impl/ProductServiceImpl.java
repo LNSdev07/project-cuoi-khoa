@@ -1,29 +1,19 @@
 package com.t3h.ecommerce.service.Impl;
 
-import com.google.gson.Gson;
 import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.entities.product.Product;
-import com.t3h.ecommerce.pojo.dto.product.ProductDB;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
-import com.t3h.ecommerce.pojo.response.Response;
-import com.t3h.ecommerce.pojo.response.TableRespone;
-import com.t3h.ecommerce.pojo.resquest.TableFilter;
-import com.t3h.ecommerce.pojo.resquest.TableRequest;
 import com.t3h.ecommerce.repositories.ProductRepository;
 import com.t3h.ecommerce.service.ProductService;
-import io.swagger.models.auth.In;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 

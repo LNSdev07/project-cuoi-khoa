@@ -4,23 +4,41 @@ import com.t3h.ecommerce.security.userprincal.UserPrinciple;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 @Component
 public class JwtProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtProvider.class);
-    private String jwtSecret ="laingocson007.vn";
-    private int jwtExpriration = 86400; // xet thoi gian song 1 ngay = 86400 giay
 
-    // tao 1 chuoi token
-    public String createToken(Authentication authentication){
+
+    @Value("${jwt.secret.key}")
+    private String jwtSecret;
+
+    @Value("${jwt.time.expire.token}")
+    private int jwtExpriration ;
+
+    @Value("${jwt.time.expire.refresh-token}")
+    private int jwtExprirationRefresh ;
+
+    public String createToken(Authentication authentication, Date now){
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
         return Jwts.builder().setSubject(userPrinciple.getUsername())
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(new Date().getTime() + jwtExpriration*1000))
+                .setExpiration(new Date(now.getTime() + jwtExpriration))
+                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+                .compact();
+    }
+
+    public String createRefreshToken(Authentication authentication, Date now){
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        return Jwts.builder().setSubject(userPrinciple.getUsername())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(now.getTime() + jwtExprirationRefresh))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
@@ -53,6 +71,14 @@ public class JwtProvider {
                 .getSubject();
         return userName;
     }
+    public String getJwt(HttpServletRequest request){
+        String authHeader = request.getHeader("Authorization");
+        if(authHeader != null && authHeader.startsWith("Bearer")){
+            return authHeader.replace("Bearer","");
+        }
+        return null;
+    }
+
 
 
 }

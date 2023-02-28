@@ -4,7 +4,7 @@ package com.t3h.ecommerce.service;
 import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.pojo.dto.size.PageSizeRequest;
 import com.t3h.ecommerce.pojo.dto.size.SizeDTO;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface SizeService {
 

@@ -5,7 +5,7 @@ import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.entities.product.Size;
 import com.t3h.ecommerce.pojo.dto.size.PageSizeRequest;
 import com.t3h.ecommerce.pojo.dto.size.SizeDTO;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.repositories.SizeRepository;
 import com.t3h.ecommerce.service.SizeService;
 import org.modelmapper.ModelMapper;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.ArrayList;
 import java.util.List;

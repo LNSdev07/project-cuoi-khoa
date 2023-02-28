@@ -2,13 +2,10 @@ package com.t3h.ecommerce.controller;
 
 import com.t3h.ecommerce.dto.request.PageRequest;
 import com.t3h.ecommerce.dto.response.PageResponse;
-import com.t3h.ecommerce.entities.product.Category;
 import com.t3h.ecommerce.pojo.dto.category.CategoryDTO;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.service.CategoryService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

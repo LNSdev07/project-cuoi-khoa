@@ -1,11 +1,10 @@
 package com.t3h.ecommerce.controller;
 
 
-import com.t3h.ecommerce.dto.request.PageRequest;
 import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.pojo.dto.size.PageSizeRequest;
 import com.t3h.ecommerce.pojo.dto.size.SizeDTO;
-import com.t3h.ecommerce.pojo.response.BaseResponse;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.service.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
