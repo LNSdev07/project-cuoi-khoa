@@ -12,23 +12,27 @@ import { SignUpService } from './service/sign-up.service';
 export class SignupComponent implements OnInit {
   formRegister!: FormGroup;
   avatarDefaut = 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-portrait-176256935.jpg';
-
+  isLoading = false;
+  gender =[
+    {code: 1, name: 'Nam'},
+    {code: 2, name: 'Nữ'}
+  ]
   constructor(private fb: FormBuilder,
               private signUpService: SignUpService,
               private uploadFileService: UpLoadFileService) { }
-
   ngOnInit(): void {
     this.buildForm();
   }
   
-  isLoading = false;
-
   buildForm(){
     this.formRegister = this.fb.group({
-      username: ['', [Validators.required]],
+      username: [null, Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      password_again: ['', [Validators.required, Validators.minLength(6)]],
+      fullName:['', Validators.required],
+      address:['', Validators.required],
+      gender:[null, Validators.required],
+      phoneNumber:[null, Validators.required]
     });
   }
 
