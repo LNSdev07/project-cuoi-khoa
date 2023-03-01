@@ -123,12 +123,12 @@ input[type="email"],
 input[type="password"],
 input[type="text"],
 input[type="tel"] {
-  border-radius: 0;
+  /* border-radius: 0;
   box-shadow: none;
   height: 45px;
   background: #eee;
   border-color: #eee;
-  outline: none;
+  outline: none; */
 }
 
 input[type="email"]:focus,
