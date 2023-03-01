@@ -17,6 +17,7 @@ import { CascadeSelectModule } from 'primeng/cascadeselect';
 import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ChipModule } from 'primeng/chip';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import { ChipsModule } from 'primeng/chips';
 import { CodeHighlighterModule } from 'primeng/codehighlighter';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
@@ -95,6 +96,8 @@ import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
     CommonModule,
     RouterLink,
     ButtonModule,
+    AvatarModule,
+    AvatarGroupModule,
     // DynamicDialogConfig,
     // DynamicDialogRef,
   ],
@@ -180,6 +183,7 @@ import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
     TreeModule,
     TreeTableModule,
     DynamicDialogModule,
+    ProgressSpinnerModule,
   ],
   providers: [
     DialogService,

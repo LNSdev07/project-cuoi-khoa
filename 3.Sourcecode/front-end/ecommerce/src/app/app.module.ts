@@ -13,6 +13,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './common/interceptor/auth.interceptor';
 import { HttpClientModule } from '@angular/common/http';
+import {AngularFireStorageModule} from "@angular/fire/compat/storage";
+import {AngularFireModule} from "@angular/fire/compat";
+import {environment} from "../../environments/environment.prod";
 @NgModule({
   declarations: [
     AppComponent
@@ -25,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     AdminModule,
     ShopModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireStorageModule,
+    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
