@@ -1,14 +1,20 @@
 <app-header></app-header>
-<div class="row" [formGroup]="formRegister">
+<div class="row">
   <div class="col-lg-10 col-xl-9 mx-auto">
     <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
-      <div class="card-img-left d-none d-md-flex">
-        <!-- Background image for card set in CSS! -->
+      <div class="card-img-left d-none d-md-flex flex justify-content-center" style="margin-top: 12%;">
+        <p-fileUpload  name="myfile[]" [customUpload]="true" [auto]="true" (uploadHandler)="chooseFile($event)" accept=".png, .jpg, .jpeg" type="file">
+        <ng-template pTemplate="content" let-files>
+            <div>
+              <p-image *ngIf="!isLoading" src="{{avatarDefaut}}" alt="Image" width="100%"></p-image>
+              <p-progressSpinner class="flex justify-content-center" *ngIf="isLoading"></p-progressSpinner>
+            </div>
+        </ng-template>
+        </p-fileUpload>
       </div>
-      <div class="card-body p-4 p-sm-5">
+      <div class="card-body p-4 p-sm-5" >
         <h2 class="card-title text-center fw-light">Register</h2>
-        <form>
-
+        <form [formGroup]="formRegister">
           <div class="form-floating mb-3">
             <label for="floatingInputUsername">Username</label>
             <input formControlName="username" type="text" class="form-control" id="floatingInputUsername" placeholder="myusername" required autofocus>
@@ -52,7 +58,7 @@
 
           </div>
 
-          <div class="d-grid mb-2">
+          <div class="d-grid mb-2 flex justify-content-center" >
             <button [disabled]="formRegister.invalid"  class="btn btn-lg btn-primary btn-login fw-bold text-uppercase" type="submit">Register</button>
           </div>
 
@@ -71,7 +77,6 @@
               <i class="fa fa-facebook-official" aria-hidden="true"></i> Sign up with Facebook
             </button>
           </div>
-
         </form>
       </div>
     </div>
