@@ -81,15 +81,22 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { TooltipModule } from 'primeng/tooltip';
 import { TreeModule } from 'primeng/tree';
 import { TreeTableModule } from 'primeng/treetable';
+import {DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {DialogService} from 'primeng/dynamicdialog';
+import { MessageService } from 'primeng/api';
+import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
+    PopupConfirmComponent,
   ],
   imports: [
     CommonModule,
     RouterLink,
-
+    ButtonModule,
+    // DynamicDialogConfig,
+    // DynamicDialogRef,
   ],
   exports: [
     HeaderComponent,
@@ -172,6 +179,11 @@ import { TreeTableModule } from 'primeng/treetable';
     TooltipModule,
     TreeModule,
     TreeTableModule,
+    DynamicDialogModule,
+  ],
+  providers: [
+    DialogService,
+    MessageService,
   ]
 })
 export class SharedModule { }

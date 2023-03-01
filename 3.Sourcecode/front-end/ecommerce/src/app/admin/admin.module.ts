@@ -12,6 +12,7 @@ import { QuanLyKhachHangComponent } from './quan-ly-khach-hang/quan-ly-khach-han
 import { QuanLySanPhamComponent } from './quan-ly-san-pham/quan-ly-san-pham.component';
 import { QuanLySizeComponent } from './quan-ly-size/quan-ly-size.component';
 import { SharedModule } from '../shared/shared.module';
+import { CreateOrEditQuanLyKhachHangComponent } from './quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SharedModule } from '../shared/shared.module';
     QuanLyDoanhThuComponent,
     QuanLyKhachHangComponent,
     QuanLySanPhamComponent,
-    QuanLySizeComponent
+    QuanLySizeComponent,
+    CreateOrEditQuanLyKhachHangComponent
   ],
     imports: [
         CommonModule,
