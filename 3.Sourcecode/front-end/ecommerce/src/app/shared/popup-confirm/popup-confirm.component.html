@@ -12,8 +12,9 @@
       <p>{{content}}</p>
     </div>
     <div class="dialog-footer-custom flex align-items-center justify-content-center">
-      <button pButton type="button" label="No" class="p-button-danger mr-3" (click)="ref.close()"></button>
-      <button pButton type="button" label="Yes" (click)="onSubmit()"></button>
+      <button pButton type="button" *ngIf="status != 0" label="No" class="p-button-danger mr-3" (click)="ref.close()"></button>
+      <button pButton type="button" *ngIf="status != 0" label="Yes" (click)="onSubmit()"></button>
+      <button pButton type="button" class="p-button-success" *ngIf="status == 0" label="OK" (click)="onSubmit()"></button>
     </div>
   </div>
   

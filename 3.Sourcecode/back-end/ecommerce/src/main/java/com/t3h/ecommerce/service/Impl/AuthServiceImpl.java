@@ -69,7 +69,8 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseEntity<>(new ResponseMessage("noemail"), HttpStatus.OK);
         }
 
-        User user = new User(signUpForm.getUserName(),
+        User user = new User(
+                signUpForm.getUserName(),
                 passwordEncoder.encode(signUpForm.getPassword()),
                 signUpForm.getEmail(),
                 signUpForm.getFullName(),
