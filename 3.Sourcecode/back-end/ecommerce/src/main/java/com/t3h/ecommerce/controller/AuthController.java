@@ -26,9 +26,9 @@ public class AuthController {
       return service.signUp(signUpForm);
    }
 
-   @PostMapping("/signin")
+   @PostMapping("/login")
    public ResponseEntity<?> signIn(@Valid @RequestBody SignInForm signInForm){
-    return service.signIn(signInForm);
+      return service.signIn(signInForm);
    }
 
    @GetMapping("/logout")
