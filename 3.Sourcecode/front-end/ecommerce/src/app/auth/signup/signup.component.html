@@ -4,10 +4,10 @@
     <div class="field col-12">
         <h1 class="flex justify-content-center">Register</h1>
     </div>
-    <!-- <div class="field col-12">
-      <button [disabled]="true" style="opacity: 0.9;"  pButton pRipple type="button"  class="p-button-danger" 
-       label="Email or Username existed !!!"></button>
-   </div> -->
+    <div class="field col-12">
+      <button [disabled]="true" *ngIf="showMessage" style="opacity: 0.9;"  pButton pRipple type="button"  class="p-button-danger" 
+       label="{{dangerMessage}}"></button>
+   </div>
     <div class="col-6 md:col-6">
       <div class="field">
         <label class="block">Username
@@ -45,6 +45,9 @@
           <div *ngIf="f['password'].hasError('required')" style="color: rgb(225, 82, 82);">
             This is a required field.
           </div>
+          <div *ngIf="f['password'].hasError('minlength')" style="color: rgb(225, 82, 82);">
+            Password must be longer than 6 characters.
+          </div>
         </div>
       </div>
       <div class="field">
@@ -67,6 +70,9 @@
         <div *ngIf="f['email'].invalid && (f['email'].dirty || f['email'].touched)">
           <div *ngIf="f['email'].hasError('required')" style="color: rgb(225, 82, 82);">
             This is a required field.
+          </div>
+          <div *ngIf="f['email'].hasError('email')" style="color: rgb(225, 82, 82);">
+            Format email incorect (Ex: abc@gmail.com)
           </div>
         </div>
 
@@ -105,9 +111,8 @@
         </div>
       </div>
       <div class="field flex justify-content-center">
-        <button style="width: 25%;" pButton pRipple type="button"  label="Register"  icon="pi pi-user-plus" class="mr-2"></button>
+        <button style="width: 25%;" [disabled]="formRegister.invalid" (click)="signup()" pButton pRipple type="button"  label="Register"  icon="pi pi-user-plus" class="mr-2"></button>
       </div>
-      
     </div>
   </div>
 </div>

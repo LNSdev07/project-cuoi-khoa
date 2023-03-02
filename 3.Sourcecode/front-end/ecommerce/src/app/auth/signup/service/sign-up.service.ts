@@ -17,7 +17,7 @@ export class SignUpService  {
   constructor(private http: HttpClient,
               private handleErr: HandleErrorService) { }
 
-  public signIn(signUpForm: SignUpForm): Observable<any>{
+  public signUp(signUpForm: SignUpForm): Observable<any>{
     return this.http.post(this.API_SIGNUP, signUpForm)
     .pipe(
       catchError(this.handleErr.handleError)

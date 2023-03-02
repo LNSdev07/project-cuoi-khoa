@@ -9,6 +9,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 export class PopupConfirmComponent {
   title = '';
   content = '';
+  status!: number
 
   constructor(
     public ref: DynamicDialogRef,
@@ -18,6 +19,7 @@ export class PopupConfirmComponent {
   ngOnInit(): void {
     this.title = this.config.data.title;
     this.content = this.config.data.content;
+    this.status = this.config.data.status;
   }
 
   onSubmit() {
