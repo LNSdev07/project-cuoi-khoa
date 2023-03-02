@@ -23,6 +23,7 @@ export class CreateOrEditQuanLyKhachHangComponent {
         data: {
           title: 'Lai Ngoc son',
           content: '',
+          status: 0
         }
       });
   

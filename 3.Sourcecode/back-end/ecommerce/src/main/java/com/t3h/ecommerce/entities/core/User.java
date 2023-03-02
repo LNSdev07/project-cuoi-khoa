@@ -54,8 +54,9 @@ public class User extends BaseEntity {
         this.password = password;
         this.email = email;
     }
-    public User(String username, String password, String email, String fullName, String avatar,
+    public User(Long createdDate, Long updatedDate,String username, String password, String email, String fullName, String avatar,
                 Integer gender, String phoneNumber, String address) {
+        super(createdDate, updatedDate);
         this.username = username;
         this.password = password;
         this.email = email;
@@ -65,7 +66,6 @@ public class User extends BaseEntity {
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),

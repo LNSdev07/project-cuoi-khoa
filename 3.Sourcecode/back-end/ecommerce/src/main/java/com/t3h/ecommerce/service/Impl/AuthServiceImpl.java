@@ -69,7 +69,10 @@ public class AuthServiceImpl implements AuthService {
             return new ResponseEntity<>(new ResponseMessage("noemail"), HttpStatus.OK);
         }
 
+        Date now = new Date();
+
         User user = new User(
+                now.getTime(), now.getTime(),
                 signUpForm.getUserName(),
                 passwordEncoder.encode(signUpForm.getPassword()),
                 signUpForm.getEmail(),
@@ -115,7 +118,7 @@ public class AuthServiceImpl implements AuthService {
                     userPrinciple.getAuthorities(),
                     userPrinciple.getAvatar()), HttpStatus.OK);
         }catch (Exception exception ){
-            return new ResponseEntity<>(new ResponseMessage("fail"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ResponseMessage("fail"),  HttpStatus.OK);
         }
     }
 
@@ -134,18 +137,18 @@ public class AuthServiceImpl implements AuthService {
 
         Cache cache_jwt = cacheManager.getCache(Constants.CACHE_JWT);
         if(cache_jwt == null){
-            return BaseResponse.builder().message("get cache error").httpCode(HttpStatus.BAD_REQUEST.value()).build();
+            return BaseResponse.builder().message("get cache error").status(HttpStatus.BAD_REQUEST.value()).build();
         }
         String refreshToken = request.getHeader(Constants.REFRESH_TOKEN);
         if(refreshToken == null || !jwtProvider.validateToken(refreshToken)){
-            return BaseResponse.builder().message("refresh token invalid").httpCode(HttpStatus.BAD_REQUEST.value()).build();
+            return BaseResponse.builder().message("refresh token invalid").status(HttpStatus.BAD_REQUEST.value()).build();
         }
         String username = jwtProvider.getUserNameFromToken(refreshToken);
         User user = userService.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("username not found!"));
         String jwtOld = cache_jwt.get(username, String.class);
         if(jwtOld == null || !jwtOld.isEmpty()){
-            return BaseResponse.builder().message("user logged out").httpCode(HttpStatus.BAD_REQUEST.value()).build();
+            return BaseResponse.builder().message("user logged out").status(HttpStatus.BAD_REQUEST.value()).build();
         }
 
         Authentication authentication = authenticationManager.authenticate(
@@ -156,13 +159,13 @@ public class AuthServiceImpl implements AuthService {
         ObjectNode data = objectMapper.createObjectNode();
             data.put("token", jwtProvider.createToken(authentication, now));
             data.put("refreshToken", jwtProvider.createRefreshToken(authentication, now));
-        return BaseResponse.builder().message("refresh token success").data(data).httpCode(HttpStatus.OK.value()).build();
+        return BaseResponse.builder().message("refresh token success").data(data).status(HttpStatus.OK.value()).build();
     }
 
     public BaseResponse logOut(HttpServletRequest request){
         String token_jwt = jwtProvider.getJwt(request);
         if(!jwtProvider.validateToken(token_jwt)){
-            return  BaseResponse.builder().message("token invalid").httpCode(HttpStatus.BAD_REQUEST.value()).build();
+            return  BaseResponse.builder().message("token invalid").status(HttpStatus.BAD_REQUEST.value()).build();
         }
 
         String username = jwtProvider.getUserNameFromToken(token_jwt);
@@ -170,11 +173,11 @@ public class AuthServiceImpl implements AuthService {
 
         if(cacheJwt == null){
             log.error("get cache error");
-            return  BaseResponse.builder().message("get cache error").httpCode(HttpStatus.BAD_REQUEST.value()).build();
+            return  BaseResponse.builder().message("get cache error").status(HttpStatus.BAD_REQUEST.value()).build();
         }
 
         cacheJwt.evictIfPresent(username);
-        return  BaseResponse.builder().message("logout success").httpCode(HttpStatus.OK.value()).build();
+        return  BaseResponse.builder().message("logout success").status(HttpStatus.OK.value()).build();
 
     }
 }

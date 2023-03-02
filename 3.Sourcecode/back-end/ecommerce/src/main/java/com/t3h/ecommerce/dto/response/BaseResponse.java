@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BaseResponse<T>{
    // http code
-    private int httpCode;
+    private int status;
 
     private String message;
 

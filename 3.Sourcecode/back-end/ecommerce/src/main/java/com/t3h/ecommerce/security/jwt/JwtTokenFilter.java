@@ -38,7 +38,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try{
-            String token = getJwt(request);
+            String token = jwtProvider.getJwt(request);
             Cache cacheJwt = cacheManager.getCache(Constants.CACHE_JWT);
 
 
@@ -61,11 +61,4 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    public String getJwt(HttpServletRequest request){
-        String authHeader = request.getHeader("Authorization");
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
-            return authHeader.replace("Bearer ","");
-        }
-        return null;
-    }
 }
