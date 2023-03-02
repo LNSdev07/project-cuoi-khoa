@@ -10,6 +10,21 @@ import { CreateOrEditQuanLyKhachHangComponent } from './create-or-edit-quan-ly-k
 })
 export class QuanLyKhachHangComponent implements OnInit {
   ref: DynamicDialogRef = new DynamicDialogRef;
+  
+  customers: any;
+  totalRecords=0;
+  isLoading = false;
+
+  gender =[
+    {code: 0, name: 'Nam'},
+    {code: 1, name: 'Nữ'}
+  ]
+
+  status = [
+    {code: 1, name: 'Enable'},
+    {code: 0, name: 'Disable'},
+
+  ]
 
   constructor(
     public dialogService: DialogService,
@@ -19,7 +34,8 @@ export class QuanLyKhachHangComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+      this.customers = this.fakeData();
+      this.totalRecords = this.customers.length;
   }
   isCollapseFilter = false;
   isEnterpriseTab = true;
@@ -47,4 +63,18 @@ export class QuanLyKhachHangComponent implements OnInit {
       // this.getData();
     });
   }
+  
+  fakeData(){
+    return [
+    {id : 1,fullName: 'Lai Ngoc Son 1' ,userName: 'sonln1' , status:1, address:'Thanh hoa', email:'son@gmail.com', 
+    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
+    {id : 2,fullName: 'Lai Ngoc Son 2',userName: 'sonln2', status:0, address:'Thanh hoa', email:'son@gmail.com', 
+    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
+    {id : 3,fullName: 'Lai Ngoc Son 3',userName: 'sonln3', status:1, address:'Thanh hoa', email:'son@gmail.com', 
+    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
+    {id : 4,fullName: 'Lai Ngoc Son 4',userName: 'sonln4', status:0, address:'Thanh hoa', email:'son@gmail.com', 
+    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
+    ]
+  }
+
 }
