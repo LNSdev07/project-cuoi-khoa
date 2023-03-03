@@ -18,7 +18,7 @@ import javax.validation.Valid;
 @Slf4j
 @Validated
 @Api("moduls shop api")
-@RequestMapping("/api/admin/")
+@RequestMapping("/api/")
 public class ProductController {
 
 
@@ -26,7 +26,7 @@ public class ProductController {
     private final ProductService service;
 
 
-    @PostMapping("product")
+    @PostMapping("admin/product")
     BaseResponse<?> findProduct(@Valid @RequestBody ProductAdminRequest request){
         System.out.println("vao day");
         return service.findProduct(request);
