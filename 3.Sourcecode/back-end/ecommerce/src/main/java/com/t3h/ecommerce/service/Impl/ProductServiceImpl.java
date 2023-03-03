@@ -1,5 +1,8 @@
 package com.t3h.ecommerce.service.Impl;
 
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdminRequest;
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.entities.product.Product;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
@@ -7,12 +10,16 @@ import com.t3h.ecommerce.repositories.ProductRepository;
 import com.t3h.ecommerce.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,33 +29,34 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
+    @Autowired
     private final ProductRepository repository;
 
-    @Override
-    public Boolean deleteProductByCatagory(String id) {
-            try{
-                repository.deleteProductByCategoryId(Long.parseLong(id.trim()));
-                return true;
-            }catch (Exception ex){
-                return false;
-            }
-    }
 
     @Override
-    public PageResponse<ProductDTO> findProduct(com.t3h.ecommerce.dto.request.PageRequest pageRequest) {
-        List<ProductDTO> list = new ArrayList<>();
+    public BaseResponse<?> findProduct(ProductAdminRequest request) {
+        if(request == null) return  BaseResponse.builder().message("request not found!").status(HttpStatus.BAD_REQUEST.value()).build();
+
         try{
+            Pageable pageable = PageRequest.of(request.getPageRequest().getPage()-1, request.getPageRequest().getPageSize(),
+                    Sort.Direction.fromString(request.getPageRequest().getCondition().equals("asc")? "asc": "desc"),
+                    (request.getPageRequest().getSortBy().isEmpty() || request.getPageRequest().getSortBy().equals("createdDate"))?
+                    "createdDate": request.getPageRequest().getSortBy());
 
-            Pageable pageable = PageRequest.of(pageRequest.getPage(), pageRequest.getPageSize());
-            Page<Product> page = repository.findProduct(pageable, pageRequest.getTextSearch(), pageRequest.getCostRequestPage().getMinCost(),
-                    pageRequest.getCostRequestPage().getMaxCost(), pageRequest.getQuantityRequestPage().getMinQuantity(),
-                    pageRequest.getQuantityRequestPage().getMaxQuantity());
-            list = page.getContent().stream().map(ProductDTO::new).collect(Collectors.toList());
+            Page<Product> page = repository.findProduct(pageable,
+                    request.getProductName(), request.getQuantity(), request.getCost(), request.getCategoryId(),
+                    request.getFilterDate().getCreatedDateStart(), request.getFilterDate().getCreatedDateEnd(),
+                    request.getFilterDate().getUpdatedDateStart(), request.getFilterDate().getUpdatedDateEnd());
 
-            return new PageResponse<>(list, page.getTotalPages(), page.getTotalElements(), "success", 200);
+            if(page == null) return  BaseResponse.builder().message("request not found!").status(HttpStatus.BAD_REQUEST.value()).build();
 
-        }catch (Exception e){
-            return new PageResponse<>(list, 0,0l, "failed", 309);
+            List<ProductAdminDTO>  list = page.getContent().stream().map(ProductAdminDTO::new).collect(Collectors.toList());
+
+            return BaseResponse.builder().data(list).message("success").status(HttpStatus.OK.value()).build();
+
+        }catch (Exception ex){
+            log.error("can not call repository in product service");
+            return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 }

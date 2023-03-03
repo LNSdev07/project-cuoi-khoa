@@ -11,18 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageRequest {
-    private String textSearch;
-    private Integer page;
-    private Integer pageSize;
-
-    private CostRequestPage costRequestPage;
-
-    private QuantityRequestPage quantityRequestPage;
-
-
-    public PageRequest(String textSearch, Integer page, Integer pageSize){
-        this.textSearch = textSearch;
-        this.page = page;
-        this.pageSize =pageSize;
-    }
+         private int page;
+         private int pageSize;
+         private String sortBy;
+         private String condition;
 }

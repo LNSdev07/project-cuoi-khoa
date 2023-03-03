@@ -15,28 +15,4 @@ import javax.validation.Valid;
 @CrossOrigin("http://localhost:4200")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService service;
-
-
-    @PostMapping("categories")
-    public PageResponse<CategoryDTO> findCategory( @Valid @RequestBody PageRequest pageRequest){
-        return service.findCategory(pageRequest);
-    }
-
-    @PostMapping("category")
-    public PageResponse<CategoryDTO> addCategory(@Valid @RequestBody CategoryDTO categoryDTO){
-        return service.addCategory(categoryDTO);
-    }
-
-    @GetMapping("category")
-    public BaseResponse<CategoryDTO> getCategoryById(@RequestParam("id") @Valid String id){
-        return service.getCategoryById(id);
-    }
-
-
-    @DeleteMapping("category")
-    public BaseResponse<CategoryDTO> deleteById(@RequestParam("id") @Valid String id){
-        return service.deleteCategoryById(id);
-    }
 }
