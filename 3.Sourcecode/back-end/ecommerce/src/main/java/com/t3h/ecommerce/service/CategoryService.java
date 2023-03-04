@@ -7,11 +7,5 @@ import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface CategoryService {
 
-    PageResponse<CategoryDTO> findCategory(PageRequest pageRequest);
 
-    PageResponse<CategoryDTO> addCategory(CategoryDTO categoryDTO);
-
-    BaseResponse<CategoryDTO> getCategoryById(String id);
-
-    BaseResponse<CategoryDTO> deleteCategoryById(String id);
 }

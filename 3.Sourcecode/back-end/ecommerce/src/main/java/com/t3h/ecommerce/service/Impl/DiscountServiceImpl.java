@@ -62,9 +62,9 @@ public class DiscountServiceImpl implements DiscountService {
                         discountDTO.getDiscountName(), discountDTO.getDiscountPercent());
             }
             repository.save(discount);
-            return new BaseResponse<>(200, "success", new DiscountDTO());
+            return new BaseResponse<>(200,0l, "success", new DiscountDTO());
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new DiscountDTO());
+            return new BaseResponse<>(309,0l, "fail", new DiscountDTO());
         }
     }
 
@@ -74,9 +74,9 @@ public class DiscountServiceImpl implements DiscountService {
             Discount discount = repository.findById(Long.parseLong(id.trim())).orElseThrow(
                     () -> new ClassNotFoundException("discount not found!")
             );
-            return new BaseResponse<>(200, "success", mapper.map(discount, DiscountDTO.class));
+            return new BaseResponse<>(200,0l, "success", mapper.map(discount, DiscountDTO.class));
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new DiscountDTO());
+            return new BaseResponse<>(309,0l, "fail", new DiscountDTO());
         }
     }
 
@@ -85,9 +85,9 @@ public class DiscountServiceImpl implements DiscountService {
         try{
             repository.deleteById(Long.parseLong(id.trim()));
 
-            return new BaseResponse<>(200, "success", new DiscountDTO());
+            return new BaseResponse<>(200,0l, "success", new DiscountDTO());
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new DiscountDTO());
+            return new BaseResponse<>(309,0l, "fail", new DiscountDTO());
         }
     }
 }

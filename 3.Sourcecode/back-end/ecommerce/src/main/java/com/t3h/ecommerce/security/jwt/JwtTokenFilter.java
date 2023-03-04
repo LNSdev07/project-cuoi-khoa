@@ -42,11 +42,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             Cache cacheJwt = cacheManager.getCache(Constants.CACHE_JWT);
 
 
-            if(token != null && jwtProvider.validateToken(token) && cacheJwt != null){
+            if(token != null && jwtProvider.validateToken(token)){
                 String username = jwtProvider.getUserNameFromToken(token);
                 UserDetails userDetails = userDetailService.loadUserByUsername(username);
                 String jwtCache = cacheJwt.get(username, String.class);
-                if(userDetails != null && jwtCache != null && !jwtCache.isEmpty()){
+                if(userDetails != null){
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails, null, userDetails.getAuthorities()
                     );
