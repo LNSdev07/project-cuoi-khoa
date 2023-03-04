@@ -52,7 +52,7 @@ export class SignupComponent implements OnInit {
   chooseFile(event: any){
     this.isLoading = true;
     const selectedFile = event.files[0]
-    this.uploadFileService.uploadFileAndGetDownloadUrl(selectedFile).subscribe(
+    this.uploadFileService.uploadFileAndGetDownloadUrl(selectedFile, "avatar").subscribe(
       url => {
         this.avatarDefaut = url;
         this.isLoading = false;

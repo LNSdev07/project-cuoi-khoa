@@ -1,5 +1,6 @@
 package com.t3h.ecommerce.entities.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.t3h.ecommerce.entities.BaseEntity;
 import com.t3h.ecommerce.entities.order.OrderDetail;
 import com.t3h.ecommerce.entities.order.Orders;
@@ -35,6 +36,7 @@ public class Product extends BaseEntity {
     @Column(name = "quantity")
     private Long quantity;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;

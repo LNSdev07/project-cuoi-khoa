@@ -1,4 +1,5 @@
 export interface ProductAdminResponse{
+      id: number;
       productName : string;
       shortDesciption: string;
       cost: number;

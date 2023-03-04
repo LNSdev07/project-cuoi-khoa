@@ -2,33 +2,32 @@
   <div class="flex align-items-center justify-content-between mb-4">
     <h3>Danh Sách Sản Phẩm</h3>
     <div class="flex align-items-center">
-      <button pButton pRipple type="button"   label="Add new" icon="pi pi-plus" class="mr-2"></button>
+      <button pButton pRipple type="button" (click)="createOrEdit()" label="Add new" icon="pi pi-plus" class="mr-2"></button>
       <button pButton pRipple type="button"   label="Import" icon="pi pi-upload" class="mr-2"
        ></button>
       <button pButton pRipple type="button" label="Export" icon="pi pi-download"></button>
     </div>
 </div>
-<p-panel header="" [toggleable]="true">
+<p-panel header="" [toggleable]="true" [formGroup]="FilterForm">
   
   <div class="p-fluid grid">
       <div class="field col-4">
-          <input placeholder="ProductName" type="text" pInputText > 
+          <input placeholder="ProductName" formControlName="productName" type="text" pInputText > 
       </div>
       <div class="field col-4">
-          <input placeholder="Quantity ( +=10 )" type="text" pInputText > 
+        <p-inputNumber placeholder="Quantity ( +=10 )" formControlName="quantity"></p-inputNumber>
       </div>
       <div class="field col-4">
-        <input placeholder="Cost ( +-100 USD)" type="text" pInputText > 
-
+        <p-inputNumber placeholder="Cost ( +-100 USD)" formControlName="cost"></p-inputNumber>
       </div>
       <div class="field col-4">
-        <p-dropdown placeholder="CategotyID" [options]="gender" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
+        <p-dropdown formControlName="categoryId" placeholder="CategotyID" [options]="gender" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-4">
-          <p-calendar [showIcon]="true"  selectionMode="range" placeholder="CreatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
+          <p-calendar [showIcon]="true" formControlName="createdDate"  selectionMode="range" placeholder="CreatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
       </div>
       <div class="field col-4">
-        <p-calendar [showIcon]="true"  selectionMode="range" placeholder="UpdatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
+        <p-calendar [showIcon]="true"  formControlName="updatedDate" selectionMode="range" placeholder="UpdatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
       </div>
   </div>
   
@@ -41,6 +40,7 @@
         icon="pi pi-sync"
         iconPos="left"
         class="mr-2 pButton"
+        (click)="reset()"
       >
         Reset
       </button>
@@ -51,6 +51,7 @@
         type="button"
         icon="pi pi-search"
         iconPos="left"
+        (click)="search()"
       >
         Search
       </button>
@@ -59,21 +60,18 @@
 </p-panel>
 <div class="mt-3" >
   <div class="flex justify-content-end">
-    <button pButton type="button" label="Enable" class="p-button-success mr-2" ></button>
-    <button label="Disable" pButton type="button" class="p-button-danger"></button>
+    <button (click)="delete()" [disabled]="!selectedProduct || !selectedProduct.length" label="Delete" pButton type="button" class="p-button-danger mr-2"></button>
   </div>
-<!-- [value]="triggerList" -->
-<!-- (onLazyLoad)="reloadTable($event)" -->
-<!-- [(selection)]="selectedTrigger" -->
-<!-- [loading]="isLoading" -->
 <p-table class="mt-3"
   #dt
   [scrollable]="true"
   scrollHeight="300px"
   [value] ="products"
   scrollDirection="both"
+  (onLazyLoad)="reloadTable($event)"
   [tableStyle]="{ 'min-width': '50rem' }"
   dataKey="id"
+  [(selection)] ="selectedProduct"
   [paginator]="true"
   [totalRecords]="totalRecords"
   [rows]="5"
@@ -81,11 +79,11 @@
   styleClass="p-datatable-gridlines"
   [rowHover]="true"
   [lazy]="true" 
+  [loading]="isLoading"
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Customers"
   [rowsPerPageOptions]="[5, 10, 15]"
   sortMode="single"
-  sortField=""
-  [globalFilterFields]="['name']"
+  sortField="productName"
   [resizableColumns]="true"
 >
   <ng-template pTemplate="header">
@@ -119,14 +117,14 @@
   </ng-template>
   <ng-template pTemplate="body" let-product>
     <tr>
-      <td><p-tableCheckbox [value]="products"></p-tableCheckbox></td>
-      <td style="min-width: 100px">{{ product.productName }}</td>
+      <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
+      <td class="cursor-pointer underline" style="min-width: 100px">{{ product.productName }}</td>
       <td style="min-width: 100px">{{ product.shortDescription }}</td>
       <td style="min-width: 180px">{{ product.cost }}</td>
       <td style="min-width: 180px">{{ product.quantity }}</td>
       <td style="min-width: 180px">{{ product.category }}</td>
-      <td style="min-width: 180px">{{ product.createdDate }}</td>
-      <td style="min-width: 180px">{{ product.updatedDate }}</td>
+      <td style="min-width: 180px">{{ product.createdDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+      <td style="min-width: 180px">{{ product.updatedDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
    </tr>
 </ng-template>
 <ng-template   pTemplate="emptymessage">
