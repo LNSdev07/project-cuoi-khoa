@@ -3,7 +3,6 @@ package com.t3h.ecommerce.service.Impl;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;
-import com.t3h.ecommerce.dto.response.PageResponse;
 import com.t3h.ecommerce.entities.product.Product;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
 import com.t3h.ecommerce.repositories.ProductRepository;
@@ -52,7 +51,7 @@ public class ProductServiceImpl implements ProductService {
 
             List<ProductAdminDTO>  list = page.getContent().stream().map(ProductAdminDTO::new).collect(Collectors.toList());
 
-            return BaseResponse.builder().data(list).message("success").status(HttpStatus.OK.value()).build();
+            return BaseResponse.builder().data(list).message("success").status(HttpStatus.OK.value()).totalRecords(page.getTotalElements()).build();
 
         }catch (Exception ex){
             log.error("can not call repository in product service");

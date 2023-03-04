@@ -70,7 +70,7 @@
   #dt
   [scrollable]="true"
   scrollHeight="300px"
-  [value] ="customers"
+  [value] ="products"
   scrollDirection="both"
   [tableStyle]="{ 'min-width': '50rem' }"
   dataKey="id"
@@ -117,18 +117,16 @@
      
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-products>
+  <ng-template pTemplate="body" let-product>
     <tr>
       <td><p-tableCheckbox [value]="products"></p-tableCheckbox></td>
-      <!-- <td style="min-width: 100px">{{ customers.fullName }}</td>
-      <td style="min-width: 100px">{{ customers.userName }}</td>
-      <td style="min-width: 180px">{{ customers.status }}</td>
-      <td style="min-width: 180px">{{ customers.address }}</td>
-      <td style="min-width: 180px">{{ customers.email }}</td>
-      <td style="min-width: 180px">{{ customers.phoneNumber }}</td>
-      <td style="min-width: 180px">{{ customers.gender }}</td>
-      <td style="min-width: 180px">{{ customers.createdDate }}</td>
-      <td style="min-width: 180px">{{ customers.updatedDate }}</td> -->
+      <td style="min-width: 100px">{{ product.productName }}</td>
+      <td style="min-width: 100px">{{ product.shortDescription }}</td>
+      <td style="min-width: 180px">{{ product.cost }}</td>
+      <td style="min-width: 180px">{{ product.quantity }}</td>
+      <td style="min-width: 180px">{{ product.category }}</td>
+      <td style="min-width: 180px">{{ product.createdDate }}</td>
+      <td style="min-width: 180px">{{ product.updatedDate }}</td>
    </tr>
 </ng-template>
 <ng-template   pTemplate="emptymessage">

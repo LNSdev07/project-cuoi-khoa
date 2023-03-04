@@ -14,6 +14,8 @@ public class BaseResponse<T>{
    // http code
     private int status;
 
+    private Long totalRecords;
+
     private String message;
 
     private T data;

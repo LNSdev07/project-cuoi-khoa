@@ -59,9 +59,9 @@ public class SizeServiceImpl implements SizeService {
 
                 repository.save(size);
             }
-            return new BaseResponse<>(200, "success", new SizeDTO());
+            return new BaseResponse<>(200,0l, "success", new SizeDTO());
         } catch (Exception e){
-            return new BaseResponse<>(309, "fail", new SizeDTO() );
+            return new BaseResponse<>(309,0l, "fail", new SizeDTO() );
         }
     }
 
@@ -70,9 +70,9 @@ public class SizeServiceImpl implements SizeService {
         try{
             repository.deleteById(Long.parseLong(id.trim()));
 
-            return new BaseResponse<>(200, "success", new SizeDTO());
+            return new BaseResponse<>(200,0l, "success", new SizeDTO());
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new SizeDTO() );
+            return new BaseResponse<>(309,0l, "fail", new SizeDTO() );
 
         }
     }
@@ -83,9 +83,9 @@ public class SizeServiceImpl implements SizeService {
             Size size = repository.getById(Long.parseLong(id.trim()));
              SizeDTO sizeDTO = mapper.map(size, SizeDTO.class);
 
-            return new BaseResponse<>(200, "success", sizeDTO );
+            return new BaseResponse<>(200,0l, "success", sizeDTO );
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new SizeDTO() );
+            return new BaseResponse<>(309,0l, "fail", new SizeDTO() );
         }
     }
 
@@ -96,9 +96,9 @@ public class SizeServiceImpl implements SizeService {
                     sizeDTO.getId(), sizeDTO.getSizeCode(), sizeDTO.getSizeName());
 
              repository.save(size);
-           return  new BaseResponse<>(200, "success", new SizeDTO() );
+           return  new BaseResponse<>(200,0l, "success", new SizeDTO() );
         }catch (Exception e){
-            return new BaseResponse<>(309, "fail", new SizeDTO() );
+            return new BaseResponse<>(309,0l, "fail", new SizeDTO() );
         }
     }
 

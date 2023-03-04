@@ -15,7 +15,7 @@ import { ProductAdminService } from './service/product-admin.service';
 export class QuanLySanPhamComponent implements OnInit {
   ref: DynamicDialogRef = new DynamicDialogRef;
   
-  customers: any;
+  products: any;
   totalRecords=0;
   isLoading = false;
   
@@ -58,7 +58,9 @@ export class QuanLySanPhamComponent implements OnInit {
       const input = this.getInput();
       console.log(input)
       this.productAdminService.findProduct(input).subscribe(res =>{
-        console.log(res)
+        this.totalRecords = res.totalRecords;
+        this.products = res.data;
+        console.log(this.products)
       })
       
   }
