@@ -1,17 +1,15 @@
 package com.t3h.ecommerce.repositories;
 
-import com.t3h.ecommerce.entities.product.Category;
 import com.t3h.ecommerce.entities.product.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 
 @Repository
@@ -36,4 +34,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                              @Param("createdDateEnd") Long createdDateEnd,
                              @Param("updatedDateStart") Long updatedDateStart,
                              @Param("updatedDateEnd") Long updatedDateEnd);
+
+
+
+//
+//   @Query(value = "SELECT P.product_name, P.cost,P.img_avt FROM Product P",nativeQuery = true)
+//   List<Product> findProductForHome(@Param("productName") String productName,
+//                                    @Param("cost") Double cost,
+//                                    @Param("imgURL") String imgAvt);
 }

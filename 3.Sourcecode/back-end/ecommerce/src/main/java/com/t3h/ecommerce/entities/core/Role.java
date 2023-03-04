@@ -1,5 +1,6 @@
 package com.t3h.ecommerce.entities.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.t3h.ecommerce.entities.BaseEntity;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class Role extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private RoleName roleName;
 
-
+    @JsonIgnore
     @ManyToMany( mappedBy = "roles",fetch = FetchType.LAZY)
     private List<User> user;
 }
