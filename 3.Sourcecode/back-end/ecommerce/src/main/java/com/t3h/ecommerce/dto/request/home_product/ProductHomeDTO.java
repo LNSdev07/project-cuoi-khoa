@@ -8,6 +8,7 @@ public class ProductHomeDTO {
     private String productName;
     private String shortDescription;
     private Double cost;
+    private String imgAvt;
     public ProductHomeDTO(Product product){
         BeanUtils.copyProperties(product,this);
     }

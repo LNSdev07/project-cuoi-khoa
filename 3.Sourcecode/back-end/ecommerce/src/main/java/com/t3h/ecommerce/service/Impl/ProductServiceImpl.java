@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
 
             List<ProductHomeDTO> list = page.getContent().stream().map(ProductHomeDTO::new).collect(Collectors.toList());
 
-            return BaseResponse.builder().data(list).message("request success").status(200).build();
+            return BaseResponse.builder().totalRecords(page.getTotalElements()).data(list).message("request success").status(200).build();
         }catch (Exception e){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
         }
