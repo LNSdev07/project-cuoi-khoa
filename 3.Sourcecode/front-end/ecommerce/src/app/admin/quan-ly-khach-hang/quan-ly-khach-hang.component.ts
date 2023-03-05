@@ -63,6 +63,10 @@ export class QuanLyKhachHangComponent implements OnInit {
       // this.getData();
     });
   }
+
+  reloadTable(e: any){
+    console.log(e)
+  }
   
   fakeData(){
     return [

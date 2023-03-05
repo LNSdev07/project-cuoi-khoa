@@ -18,6 +18,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,6 +40,8 @@ public class ProductServiceImpl implements ProductService {
         if(request == null) return  BaseResponse.builder().message("request not found!").status(HttpStatus.BAD_REQUEST.value()).build();
 
         try{
+
+
             Pageable pageable = PageRequest.of(request.getPageRequest().getPage()-1, request.getPageRequest().getPageSize(),
                     Sort.Direction.fromString(request.getPageRequest().getCondition().equals("asc")? "asc": "desc"),
                     (request.getPageRequest().getSortBy().isEmpty() || request.getPageRequest().getSortBy().equals("createdDate"))?
@@ -58,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+
     public BaseResponse<?> findProductForHome(com.t3h.ecommerce.dto.request.PageRequest pageRequest) {
         if(pageRequest.getPage() <=0 || pageRequest.getPageSize() <= 0){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
@@ -73,6 +81,23 @@ public class ProductServiceImpl implements ProductService {
             return BaseResponse.builder().data(list).message("request success").status(200).build();
         }catch (Exception e){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
+
+
+    public BaseResponse<?> deleteProduct(String Ids) {
+        if(Ids == null || Ids.isEmpty()) return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
+
+        try{
+            String[] arr = Ids.split(",");
+            List<Long> ids = new ArrayList<>();
+            for(int i=0 ;i< arr.length; i++){
+                ids.add(Long.parseLong(arr[i]));
+            }
+            repository.deleteProduct(ids);
+            return BaseResponse.builder().message("delete success").status(HttpStatus.OK.value()).build();
+        } catch (Exception ex){
+            return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 

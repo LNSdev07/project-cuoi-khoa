@@ -18,6 +18,7 @@ import javax.validation.Valid;
 @Slf4j
 @Validated
 @Api("moduls shop api")
+@CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/")
 public class ProductController {
 
@@ -28,7 +29,12 @@ public class ProductController {
 
     @PostMapping("admin/product")
     BaseResponse<?> findProduct(@Valid @RequestBody ProductAdminRequest request){
-        System.out.println("vao day");
         return service.findProduct(request);
+    }
+
+
+    @DeleteMapping("admin/product")
+    BaseResponse<?> deleteProduct( @Valid @RequestParam("Ids") String Ids){
+        return service.deleteProduct(Ids);
     }
 }

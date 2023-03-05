@@ -7,6 +7,7 @@ import org.springframework.beans.BeanUtils;
 
 @Data
 public class ProductAdminDTO {
+    private Long id;
     private String productName;
     private String shortDescription;
     private Double cost;

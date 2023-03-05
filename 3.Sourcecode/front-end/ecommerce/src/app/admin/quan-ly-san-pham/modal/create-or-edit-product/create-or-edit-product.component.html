@@ -1,0 +1,145 @@
+
+<div class="dialog-body-custom" [formGroup]="AddForm" >
+    <div >
+      <div class="flex justify-content-end">
+        <button  pButton type="button" label="Edit" ></button>
+      </div>
+    </div>
+      <div class="p-fluid grid">
+        <div  class="field col-6">
+          <label class="block">Product Name <span class="text-danger"> *</span></label>
+          <span class="w-full">
+            <input
+              type="text"
+              pInputText
+              formControlName="productName"
+              placeholder=""
+            />
+          </span>
+
+          <div *ngIf="f['productName'].invalid && (f['productName'].dirty || f['productName'].touched)">
+            <div *ngIf="f['productName'].hasError('required')" style="color: rgb(225, 82, 82);">
+              This is a required field.
+            </div>
+          </div>
+
+        </div>
+          <div class="field col-6">
+              <label class="block">Quantity
+                  <span class="text-danger"> *</span>
+              </label>
+              <span class="w-full">
+                <p-inputNumber  formControlName="quantity"></p-inputNumber>
+              </span>
+
+              <div *ngIf="f['quantity'].invalid && (f['quantity'].dirty || f['quantity'].touched)">
+                <div *ngIf="f['quantity'].hasError('required')" style="color: rgb(225, 82, 82);">
+                  This is a required field.
+                </div>
+              </div>
+            </div>
+            <div class="field col-6">
+                <label class="block">Cost
+                  <span class="text-danger"> *</span>
+                </label>
+                <p-inputNumber formControlName="cost"  mode="decimal"></p-inputNumber>
+                 
+                <div *ngIf="f['cost'].invalid && (f['cost'].dirty || f['cost'].touched)">
+                  <div *ngIf="f['cost'].hasError('required')" style="color: rgb(225, 82, 82);">
+                    This is a required field.
+                  </div>
+                </div>
+              </div>
+            <div class="field col-6">
+              <label class="block">Category<span class="text-danger"> *</span>
+              </label>
+              <span class="w-full">
+                <p-dropdown  formControlName="categoryId" optionLabel="name"></p-dropdown>
+              </span>
+
+              <div *ngIf="f['categoryId'].invalid && (f['categoryId'].dirty || f['categoryId'].touched)">
+                <div *ngIf="f['categoryId'].hasError('required')" style="color: rgb(225, 82, 82);">
+                  This is a required field.
+                </div>
+              </div>
+            </div>
+
+            <div class="field col-6">
+              <label class="block">Color<span class="text-danger"> *</span>
+              </label>
+              <p-dropdown  formControlName="color" optionLabel="name"></p-dropdown>
+              <div *ngIf="f['color'].invalid && (f['color'].dirty || f['color'].touched)">
+                <div *ngIf="f['color'].hasError('required')" style="color: rgb(225, 82, 82);">
+                  This is a required field.
+                </div>
+              </div>
+            </div>
+              
+            <div class="field col-6">
+              <label class="block">Size<span class="text-danger"> *</span>
+              </label>
+              <p-dropdown  formControlName="size" optionLabel="name"></p-dropdown>
+              <div *ngIf="f['size'].invalid && (f['size'].dirty || f['size'].touched)">
+                <div *ngIf="f['size'].hasError('required')" style="color: rgb(225, 82, 82);">
+                  This is a required field.
+                </div>
+              </div>
+            </div>
+           
+            <div class="field col-12">
+              <label class="block">Discount<span class="text-danger"> *</span>
+              </label>
+              <p-dropdown  formControlName="discount" optionLabel="name"></p-dropdown>
+              <div *ngIf="f['discount'].invalid && (f['discount'].dirty || f['discount'].touched)">
+                <div *ngIf="f['discount'].hasError('required')" style="color: rgb(225, 82, 82);">
+                  This is a required field.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="field col-6">
+                <label class="block">Short Description<span class="text-danger"> *</span>
+                </label>
+                <textarea formControlName="shortDescription" [rows]="5" [cols]="30" pInputTextarea [autoResize]="true"></textarea>
+                
+                <div *ngIf="f['shortDescription'].invalid && (f['shortDescription'].dirty || f['shortDescription'].touched)">
+                  <div *ngIf="f['shortDescription'].hasError('required')" style="color: rgb(225, 82, 82);">
+                    This is a required field.
+                  </div>
+                </div>
+            
+              </div>
+            <div class="field col-6">
+                <label class="block">Description<span class="text-danger"> *</span>
+                </label>
+                <textarea formControlName="description" [rows]="5" [cols]="30" pInputTextarea [autoResize]="true"></textarea>
+                <div *ngIf="f['description'].invalid && (f['description'].dirty || f['description'].touched)">
+                  <div *ngIf="f['description'].hasError('required')" style="color: rgb(225, 82, 82);">
+                    This is a required field.
+                  </div>
+                </div>
+              </div>
+
+  
+            <div class="field col-12">
+                <label class="block">Image Product ( Chú ý ảnh đầu tiên được tải lên sẽ chọn mặc định để hiện thị avt sản phẩm)<span class="text-danger"> *</span>
+                </label>
+                    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="chooseFile($event)" url="./upload.php" [multiple]="true"
+                    accept=".png, .jpg, .jpeg">
+                       
+                    <ng-template pTemplate="content" let-files>
+                        <div>
+                          <p-progressSpinner class="flex justify-content-center" *ngIf="isLoading"></p-progressSpinner>
+                        </div>
+                    </ng-template>
+                    
+                    </p-fileUpload>
+            </div>
+      </div>
+</div>
+
+<div class="dialog-footer-custom flex align-items-center justify-content-center">
+    <button   pButton pRipple type="button" label="Cancel" class="p-button-secondary mr-2" (click)="onClose()"></button>
+    <button [disabled]="this.AddForm.invalid || !arrUrlImg.length || arrUrlImg.length==0" pButton pRipple type="button" label="Save" (click)="onSave()"></button>
+  </div>

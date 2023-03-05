@@ -12,4 +12,7 @@ public interface ProductService {
 
     BaseResponse<?> findProductForHome(PageRequest pageRequest);
 
+
+    BaseResponse<?> deleteProduct(String Ids);
+
 }
