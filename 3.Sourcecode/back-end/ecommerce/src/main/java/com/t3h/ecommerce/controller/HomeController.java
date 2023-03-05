@@ -22,7 +22,7 @@ public class HomeController {
     private final ProductService service;
 
 
-    @GetMapping("public/home")
+    @PostMapping("public/home")
     BaseResponse<?> getProductForHome(@Valid @RequestBody PageRequest pageRequest){
         return service.findProductForHome(pageRequest);
     }

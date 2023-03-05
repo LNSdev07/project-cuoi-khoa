@@ -38,6 +38,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 
-   @Query(value = "select p from Product  P")
+   @Query(value = "select p from Product  p")
    Page<Product> findProductForHome(Pageable pageable);
 }
