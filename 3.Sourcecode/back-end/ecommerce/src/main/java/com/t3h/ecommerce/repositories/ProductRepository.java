@@ -37,9 +37,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
 
 
-//
-//   @Query(value = "SELECT P.product_name, P.cost,P.img_avt FROM Product P",nativeQuery = true)
-//   List<Product> findProductForHome(@Param("productName") String productName,
-//                                    @Param("cost") Double cost,
-//                                    @Param("imgURL") String imgAvt);
+
+   @Query(value = "select p from Product  P")
+   Page<Product> findProductForHome(Pageable pageable);
 }
