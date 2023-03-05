@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,6 +38,8 @@ public class ProductServiceImpl implements ProductService {
         if(request == null) return  BaseResponse.builder().message("request not found!").status(HttpStatus.BAD_REQUEST.value()).build();
 
         try{
+
+
             Pageable pageable = PageRequest.of(request.getPageRequest().getPage()-1, request.getPageRequest().getPageSize(),
                     Sort.Direction.fromString(request.getPageRequest().getCondition().equals("asc")? "asc": "desc"),
                     (request.getPageRequest().getSortBy().isEmpty() || request.getPageRequest().getSortBy().equals("createdDate"))?
@@ -56,6 +59,23 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception ex){
             log.error("can not call repository in product service");
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
+
+    @Override
+    public BaseResponse<?> deleteProduct(String Ids) {
+        if(Ids == null || Ids.isEmpty()) return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
+
+        try{
+            String[] arr = Ids.split(",");
+            List<Long> ids = new ArrayList<>();
+            for(int i=0 ;i< arr.length; i++){
+                ids.add(Long.parseLong(arr[i]));
+            }
+            repository.deleteProduct(ids);
+            return BaseResponse.builder().message("delete success").status(HttpStatus.OK.value()).build();
+        } catch (Exception ex){
+            return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 }

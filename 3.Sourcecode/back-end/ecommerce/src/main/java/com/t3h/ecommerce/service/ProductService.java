@@ -11,4 +11,6 @@ import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
 public interface ProductService {
 
     BaseResponse<?> findProduct(ProductAdminRequest request);
+
+    BaseResponse<?> deleteProduct(String Ids);
 }

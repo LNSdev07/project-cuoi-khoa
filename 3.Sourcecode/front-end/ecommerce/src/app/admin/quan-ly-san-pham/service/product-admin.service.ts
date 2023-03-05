@@ -13,6 +13,7 @@ import { ProductAdminResponse } from '../model/product-admin-response.model';
 export class ProductAdminService {
 
   private URL_FIND = environment.API_LOCAL+'/admin/product';
+  private URL_DELETE = environment.API_LOCAL +'/admin/product'
 
   constructor(private http: HttpClient,
               private handleErr: HandleErrorService) { }
@@ -23,4 +24,11 @@ export class ProductAdminService {
       catchError(this.handleErr.handleError)
     );
   } 
+
+  public deleteProduct(Ids: number[]) : Observable<any>{
+    const url = `${this.URL_DELETE}?Ids=${Ids.join(',')}`;
+    return this.http.delete<any>(url).pipe(
+      catchError(this.handleErr.handleError)
+    );
+  }
 }

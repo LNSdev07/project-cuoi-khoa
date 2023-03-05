@@ -86,6 +86,7 @@ import {DynamicDialogConfig, DynamicDialogModule, DynamicDialogRef} from 'primen
 import {DialogService} from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
+import {ReactiveFormsModule} from "@angular/forms";
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -184,6 +185,7 @@ import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
     TreeTableModule,
     DynamicDialogModule,
     ProgressSpinnerModule,
+    ReactiveFormsModule,
   ],
   providers: [
     DialogService,

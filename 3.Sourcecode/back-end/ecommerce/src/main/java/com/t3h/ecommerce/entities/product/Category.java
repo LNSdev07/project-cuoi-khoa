@@ -1,6 +1,7 @@
 package com.t3h.ecommerce.entities.product;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.t3h.ecommerce.entities.BaseEntity;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class Category extends BaseEntity {
     @Column(name = "description", columnDefinition = "text")
     private String description;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Product> products;
 

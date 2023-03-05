@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { UpLoadFileService } from 'src/app/common/upload-file/up-load-file.service';
 import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
 
 @Component({
@@ -10,6 +11,7 @@ import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confir
 export class CreateOrEditQuanLyKhachHangComponent {
 
   constructor( public ref: DynamicDialogRef,
+    private uploadFileService: UpLoadFileService,
                private dialogService: DialogService ){
     
   }

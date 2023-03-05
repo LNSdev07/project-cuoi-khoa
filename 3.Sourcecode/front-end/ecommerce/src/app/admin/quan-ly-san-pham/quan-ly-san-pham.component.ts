@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
 import { FilterDate } from '../common/filter-date.model';
 import { PageRequest } from '../common/page-request.model';
 import { CreateOrEditQuanLyKhachHangComponent } from '../quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang.component';
+import { CreateOrEditProductComponent } from './modal/create-or-edit-product/create-or-edit-product.component';
 import { ProductAdminReQuestModel } from './model/product-admin-request.model';
+import { ProductAdminResponse } from './model/product-admin-response.model';
 import { ProductAdminService } from './service/product-admin.service';
 
 @Component({
@@ -14,10 +18,12 @@ import { ProductAdminService } from './service/product-admin.service';
 })
 export class QuanLySanPhamComponent implements OnInit {
   ref: DynamicDialogRef = new DynamicDialogRef;
+  FilterForm!: FormGroup
   
   products: any;
   totalRecords=0;
   isLoading = false;
+  selectedProduct! : ProductAdminResponse[]
   
   // de phan trang va sap xep
   paginator: PageRequest={
@@ -34,64 +40,15 @@ export class QuanLySanPhamComponent implements OnInit {
     updatedDateEnd: 0
   }
 
-
-
-  gender =[
-    {code: 0, name: 'Nam'},
-    {code: 1, name: 'Nữ'}
-  ]
-
-  status = [
-    {code: 1, name: 'Enable'},
-    {code: 0, name: 'Disable'},
-  ]
-
-  constructor(
-    public dialogService: DialogService,
-    private messageService: MessageService,
-    private productAdminService: ProductAdminService
-  ){
-
-  }
-
-  ngOnInit(): void {
-      const input = this.getInput();
-      console.log(input)
-      this.productAdminService.findProduct(input).subscribe(res =>{
-        this.totalRecords = res.totalRecords;
-        this.products = res.data;
-        console.log(this.products)
-      })
-      
-  }
-  isCollapseFilter = false;
-  isEnterpriseTab = true;
-
-
-  getInput(){
-    const input: ProductAdminReQuestModel ={
-      filterDate: this.filterDate,
-      pageRequest: this.paginator,
-      productName: '',
-      quantity: 0,
-      cost: 0,
-      categoryId: 0
-    }
-    return input;
-  }
-
-  onClickCollapseFilter(event:any) {
-    this.isCollapseFilter = event.collapsed;
-  }
-
-  addOrEdit(severity?: any){
-    this.ref = this.dialogService.open(CreateOrEditQuanLyKhachHangComponent, {
-      header: severity ? 'Detail' : 'Add new Severity',
-      width: '50%',
+  createOrEdit(product?: any){
+    console.log('vao day')
+    this.ref = this.dialogService.open(CreateOrEditProductComponent, {
+      header: product ? 'Chi tiết sản phẩm' : 'Thêm mới sản phẩm',
+      width: '80%',
       height:'100%',
       contentStyle: { 'padding-bottom': '0','height':'100%' },
       baseZIndex: 10000,
-      data: { severity: severity },
+      data: { product: product },
     });
     this.ref.onClose.subscribe(() => {
       this.messageService.add({
@@ -100,20 +57,139 @@ export class QuanLySanPhamComponent implements OnInit {
         detail: '',
         life: 3000,
       });
-      // this.getData();
+
     });
   }
-  
-  fakeData(){
-    return [
-    {id : 1,fullName: 'Lai Ngoc Son 1' ,userName: 'sonln1' , status:1, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 2,fullName: 'Lai Ngoc Son 2',userName: 'sonln2', status:0, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 3,fullName: 'Lai Ngoc Son 3',userName: 'sonln3', status:1, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 4,fullName: 'Lai Ngoc Son 4',userName: 'sonln4', status:0, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    ]
+
+  delete(){
+    const confirm = this.dialogService.open(PopupConfirmComponent, {
+      showHeader: false,
+      baseZIndex: 10000,
+      data: {
+        title: 'Bạn có chắc muốn xóa sản phẩm không ?',
+        content: '',
+        status: 1
+      }
+    });
+
+    confirm.onClose.subscribe(res => {
+          if(this.selectedProduct.length != 0){
+            const Ids  = this.selectedProduct.map(ele => ele.id);
+            this.productAdminService.deleteProduct(Ids).subscribe(res =>{
+              console.log(res);
+              if(res.status === 200){
+                  this.messageService.add({
+                    severity: 'success',
+                    summary: 'Success',
+                    detail: '',
+                    life: 3000,
+                  });
+                  this.getData();
+              }
+              else{
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'fail',
+                  detail: '',
+                  life: 3000,
+                });
+              }
+            })
+          }
+    })
+
   }
+
+
+
+  gender =[
+    {code: 0, name: 'Nam'},
+    {code: 1, name: 'Nữ'}
+  ]
+
+  constructor(
+    public dialogService: DialogService,
+    private messageService: MessageService,
+    private productAdminService: ProductAdminService,
+    private fb: FormBuilder,
+  ){
+
+  }
+
+  ngOnInit(): void {
+    //  this.getData();
+    this.buildForm();
+      
+  }
+  isCollapseFilter = false;
+  isEnterpriseTab = true;
+  
+  buildForm(){
+        this.FilterForm = this.fb.group({
+          productName: [''],
+          quantity:[null],
+          cost:[null],
+          categoryId:[0],
+          createdDate: [0],
+          updatedDate:[0]
+        })
+  }
+
+
+  getData(){
+    const input = this.getParam();
+    this.productAdminService.findProduct(input).subscribe(res =>{
+      this.totalRecords = res.totalRecords;
+      this.products = res.data;
+      this.isLoading = true;
+      if(this.products.length != 0) this.isLoading = false
+    })
+    
+  }
+
+  getParam(){
+    this.filterDate.createdDateStart = this.FilterForm.controls['createdDate'].value[0]? this.FilterForm.controls['createdDate'].value[0].getTime():0;
+    this.filterDate.createdDateEnd = this.FilterForm.controls['createdDate'].value[1]?this.FilterForm.controls['createdDate'].value[1].getTime():0;
+    this.filterDate.updatedDateStart = this.FilterForm.controls['updatedDate'].value[0]? this.FilterForm.controls['updatedDate'].value[0].getTime():0;
+    this.filterDate.updatedDateEnd = this.FilterForm.controls['updatedDate'].value[1]?this.FilterForm.controls['updatedDate'].value[1].getTime():0;
+    
+    const input : ProductAdminReQuestModel ={
+      filterDate: this.filterDate,
+      pageRequest: this.paginator,
+      productName: this.FilterForm.controls['productName'].value,
+      quantity: this.FilterForm.controls['quantity'].value??0,
+      cost: this.FilterForm.controls['cost'].value??0,
+      categoryId: this.FilterForm.controls['categoryId'].value
+    }
+
+    return input;
+  }
+
+
+
+  onClickCollapseFilter(event:any) {
+    this.isCollapseFilter = event.collapsed;
+  }
+
+  reloadTable(e: { first: any; rows: any; sortField: any; sortOrder: number; }){
+
+    this.paginator.page = e.first==0? 1: (e.first/e.rows +1);
+    this.paginator.pageSize = e.rows;
+    this.paginator.sortBy = e.sortField;
+    this.paginator.condition = e.sortOrder === 1 ? 'asc' : 'desc';
+    this.getData();
+  }
+
+  search(){
+    this.getData();
+  }
+  reset(){
+    this.buildForm();
+    this.getData();
+  }
+
+
+
+  
+
 }
