@@ -17,7 +17,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @Slf4j
 @Validated
-@Api("moduls shop api")
 @CrossOrigin("http://localhost:4200")
 @RequestMapping("/api/")
 public class ProductController {

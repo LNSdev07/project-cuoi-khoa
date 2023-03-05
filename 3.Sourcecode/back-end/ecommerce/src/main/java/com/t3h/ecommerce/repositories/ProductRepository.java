@@ -40,6 +40,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                              @Param("updatedDateEnd") Long updatedDateEnd);
 
 
+ D
 
 
 
@@ -47,7 +48,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    Page<Product> findProductForHome(Pageable pageable);
 
 
-
+ 
    @Modifying
    @Query("delete from Product p where p.id in :ids")
    void deleteProduct(@Param("ids") List<Long> ids);

@@ -7,7 +7,11 @@ import {ProductSingleComponent} from './product-single/product-single.component'
 import {ProfileDetailsComponent} from './profile-details/profile-details.component';
 import {ErrorComponent} from './error/error.component';
 import { ShopComponent } from './shop.component';
+ 
 import {FaqComponent} from "./faq/faq.component";
+ 
+import {ContactComponent} from "./contact/contact.component";
+ 
 
 
 const routes: Routes = [{path: '', component: HomeComponent},
@@ -17,7 +21,11 @@ const routes: Routes = [{path: '', component: HomeComponent},
   {path: 'orders', component: CheckoutComponent},
   {path: 'product-single', component: ProductSingleComponent},
   {path: 'profile-detail', component: ProfileDetailsComponent},
+ 
   {path: 'faq',component: FaqComponent},
+ 
+  {path:'contact',component: ContactComponent},
+ 
   {path: '**', component: ErrorComponent}];
 
 @NgModule({

@@ -13,6 +13,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { ProductSingleComponent } from './product-single/product-single.component';
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import {SharedModule} from "../shared/shared.module";
+import { ContactComponent } from './contact/contact.component';
 
 import {DataViewModule} from 'primeng/dataview';
 import { FaqComponent } from './faq/faq.component';
@@ -27,7 +28,9 @@ import { FaqComponent } from './faq/faq.component';
     OrdersComponent,
     ProductSingleComponent,
     ProfileDetailsComponent,
-    FaqComponent
+    FaqComponent,
+    ContactComponent
+ 
   ],
     imports: [
         CommonModule,
