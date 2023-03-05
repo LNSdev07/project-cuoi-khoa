@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white w-100 navigation" id="navbar">
-  <div class="container">
+<nav class="navbar navbar-expand-lg navbar-light bg-white w-100 navigation" style="background-color: #e7e7e7 !important;" id="navbar">
+  <div class="container" style="background-color: #e7e7e7">
     <a class="navbar-brand font-weight-bold" routerLink="/">E-Shop</a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar"
@@ -14,13 +14,22 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">About Us</a>
+          <a class="nav-link" href="#">Shop</a>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">FAQ</a>
+        </li>
+
         <!-- Pages -->
         <li class="nav-item dropdown dropdown-slide">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-delay="350"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Pages.
+            About Us.
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
             <li><a href="#">About Us</a></li>
@@ -33,18 +42,18 @@
         </li><!-- /Pages -->
         <!-- / Blog -->
 
-        <li class="nav-item dropdown dropdown-slide">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-delay="350"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Shop.
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-            <li><a routerLink="/shop">Shop</a></li>
-            <li><a routerLink="/product-single">Product Details</a></li>
-            <li><a routerLink="/checkout">Checkout</a></li>
-            <li><a routerLink="/cart">Cart</a></li>
-          </ul>
-        </li><!-- / Blog -->
+<!--        <li class="nav-item dropdown dropdown-slide">-->
+<!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-delay="350"-->
+<!--             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            Shop.-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">-->
+<!--            <li><a routerLink="/shop">Shop</a></li>-->
+<!--            <li><a routerLink="/product-single">Product Details</a></li>-->
+<!--            <li><a routerLink="/checkout">Checkout</a></li>-->
+<!--            <li><a routerLink="/cart">Cart</a></li>-->
+<!--          </ul>-->
+<!--        </li>&lt;!&ndash; / Blog &ndash;&gt;-->
 
         <!-- Account -->
         <li class="nav-item dropdown dropdown-slide">
@@ -57,8 +66,6 @@
             <li><a routerLink="/order">Orders</a></li>
             <li><a routerLink="/address">Address</a></li>
             <li><a routerLink="/profile-details">Profile Details</a></li>
-            <li><a routerLink="/login">Login Page</a></li>
-            <li><a routerLink="/signup">SignUp Page</a></li>
             <li><a routerLink="/forgot-password">Forgot Password</a></li>
           </ul>
         </li><!-- / Account -->
@@ -73,9 +80,9 @@
       <button *ngIf="checkedLogin" (click)="logout()" pButton pRipple  icon="pi pi-power-off"  label="Logout" class="p-button-danger mx-3"></button>
     </div>
 
- 
 
-  
+
+
 
 
 

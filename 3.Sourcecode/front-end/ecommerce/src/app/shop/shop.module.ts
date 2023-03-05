@@ -14,6 +14,9 @@ import { ProductSingleComponent } from './product-single/product-single.componen
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import {SharedModule} from "../shared/shared.module";
 
+import {DataViewModule} from 'primeng/dataview';
+import { FaqComponent } from './faq/faq.component';
+
 @NgModule({
   declarations: [
     ShopComponent,
@@ -23,13 +26,15 @@ import {SharedModule} from "../shared/shared.module";
     ErrorComponent,
     OrdersComponent,
     ProductSingleComponent,
-    ProfileDetailsComponent
+    ProfileDetailsComponent,
+    FaqComponent
   ],
     imports: [
         CommonModule,
         ShopRoutingModule,
         SlickCarouselModule,
-        SharedModule
+        SharedModule,
+      DataViewModule
     ]
 })
 export class ShopModule { }
