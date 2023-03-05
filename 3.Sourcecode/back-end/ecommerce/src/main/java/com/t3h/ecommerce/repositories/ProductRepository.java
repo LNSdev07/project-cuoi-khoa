@@ -40,7 +40,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                              @Param("updatedDateEnd") Long updatedDateEnd);
 
 
-
    @Modifying
    @Query("delete from Product p where p.id in :ids")
    void deleteProduct(@Param("ids") List<Long> ids);
