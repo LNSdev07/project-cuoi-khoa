@@ -8,10 +8,11 @@ import {ProfileDetailsComponent} from './profile-details/profile-details.compone
 import {ErrorComponent} from './error/error.component';
 import { ShopComponent } from './shop.component';
 import {ContactComponent} from "./contact/contact.component";
+import {ShopPageComponent} from "./shop-page/shop-page.component";
 
 
 const routes: Routes = [{path: '', component: HomeComponent},
-  {path:'shop', component: ShopComponent},
+  {path:'shop-page', component:ShopPageComponent},
   {path: 'cart', component: CartComponent},
   {path: 'check-out', component: CheckoutComponent},
   {path: 'orders', component: CheckoutComponent},

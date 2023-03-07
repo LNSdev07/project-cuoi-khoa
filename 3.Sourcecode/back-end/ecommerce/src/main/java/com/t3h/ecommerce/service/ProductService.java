@@ -13,4 +13,6 @@ public interface ProductService {
     BaseResponse<?> findProduct(ProductAdminRequest request);
 
     BaseResponse<?> deleteProduct(String Ids);
+
+    BaseResponse<?> findProductForShop(PageRequest request);
 }

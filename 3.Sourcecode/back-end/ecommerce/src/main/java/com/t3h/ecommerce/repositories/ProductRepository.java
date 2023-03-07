@@ -45,4 +45,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    void deleteProduct(@Param("ids") List<Long> ids);
 
 
+   @Query(value = "select p from Product  p")
+   Page<Product> findProductForShop(Pageable pageable);
+
+
 }
