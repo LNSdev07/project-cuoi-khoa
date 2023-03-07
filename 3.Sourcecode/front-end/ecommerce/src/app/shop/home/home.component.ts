@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {Products} from "./home-model/home-response.model";
+
 import {HomeServiceService} from "./home-service/home-service.service";
 import {PrimeNGConfig, SelectItem} from "primeng/api";
-import {ProductService} from "./home-service/productService";
 import {PageRequest} from "../../admin/common/page-request.model";
-import {ProductRequest} from "./home-model/home-request.model";
+
 
 @Component({
   selector: 'app-home',
@@ -25,7 +24,6 @@ export class HomeComponent implements OnInit{
   totalRecords: any;
 
   constructor(private homeService: HomeServiceService,
-              private productService: ProductService,
               private primengConfig: PrimeNGConfig) {
   }
 
