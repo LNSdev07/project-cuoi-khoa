@@ -19,28 +19,8 @@ public class SizeController {
     @Autowired
     private SizeService service;
 
-    @PostMapping("sizes")
-    public PageResponse<SizeDTO> findSize(@RequestBody @Valid PageSizeRequest pageRequest){
-        return service.findSize(pageRequest);
-    }
-
-    @PostMapping("size")
-    public BaseResponse<SizeDTO> addSize(@RequestBody @Valid SizeDTO sizeDTO){
-        return service.addSize(sizeDTO);
-    }
-
-    @DeleteMapping("size")
-    public BaseResponse<SizeDTO> deleteById(@Valid @RequestParam("id") String id){
-        return service.deleteById(id);
-    }
-
-    @GetMapping("size")
-    public BaseResponse<SizeDTO> getSizeById(@Valid @RequestParam("id") String id){
-        return service.getSizeById(id);
-    }
-
-    @PutMapping("size")
-    public BaseResponse<SizeDTO> updateSize(@RequestBody @Valid SizeDTO sizeDTO){
-        return service.updateSize(sizeDTO);
+    @GetMapping("/public/sizes")
+    public BaseResponse<?> getAllSize(){
+        return service.getAllSize();
     }
 }

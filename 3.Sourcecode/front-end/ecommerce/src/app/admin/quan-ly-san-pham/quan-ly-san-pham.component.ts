@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { forkJoin } from 'rxjs';
 import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
 import { FilterDate } from '../common/filter-date.model';
 import { PageRequest } from '../common/page-request.model';
@@ -24,6 +25,14 @@ export class QuanLySanPhamComponent implements OnInit {
   totalRecords=0;
   isLoading = false;
   selectedProduct! : ProductAdminResponse[]
+
+  category= [
+    {
+      code: 0,
+      name: ''
+    }
+  ] 
+
   
   // de phan trang va sap xep
   paginator: PageRequest={
@@ -43,7 +52,7 @@ export class QuanLySanPhamComponent implements OnInit {
   createOrEdit(product?: any){
     console.log('vao day')
     this.ref = this.dialogService.open(CreateOrEditProductComponent, {
-      header: product ? 'Chi tiết sản phẩm' : 'Thêm mới sản phẩm',
+      header: product? 'Chi tiết sản phẩm' : 'Thêm mới sản phẩm',
       width: '80%',
       height:'100%',
       contentStyle: { 'padding-bottom': '0','height':'100%' },
@@ -73,7 +82,8 @@ export class QuanLySanPhamComponent implements OnInit {
     });
 
     confirm.onClose.subscribe(res => {
-          if(this.selectedProduct.length != 0){
+           console.log(res)
+          if(this.selectedProduct.length != 0 && res === 'yes'){
             const Ids  = this.selectedProduct.map(ele => ele.id);
             this.productAdminService.deleteProduct(Ids).subscribe(res =>{
               console.log(res);
@@ -84,6 +94,7 @@ export class QuanLySanPhamComponent implements OnInit {
                     detail: '',
                     life: 3000,
                   });
+                  this.selectedProduct =[];
                   this.getData();
               }
               else{
@@ -119,6 +130,17 @@ export class QuanLySanPhamComponent implements OnInit {
   ngOnInit(): void {
     //  this.getData();
     this.buildForm();
+
+    forkJoin([
+      this.productAdminService.getAllCategories(),
+   ]).subscribe(result =>{
+     this.category =[];
+     result[0].data.forEach(res =>{
+      this.category.push({code: res.id, name: res.categoryName});
+     })
+    })
+
+
       
   }
   isCollapseFilter = false;
@@ -141,10 +163,10 @@ export class QuanLySanPhamComponent implements OnInit {
     this.productAdminService.findProduct(input).subscribe(res =>{
       this.totalRecords = res.totalRecords;
       this.products = res.data;
-      this.isLoading = true;
+      // this.isLoading = true;
       if(this.products.length != 0) this.isLoading = false
     })
-    
+    // this.isLoading = true;
   }
 
   getParam(){
@@ -176,7 +198,7 @@ export class QuanLySanPhamComponent implements OnInit {
     this.paginator.page = e.first==0? 1: (e.first/e.rows +1);
     this.paginator.pageSize = e.rows;
     this.paginator.sortBy = e.sortField;
-    this.paginator.condition = e.sortOrder === 1 ? 'asc' : 'desc';
+    this.paginator.condition = e.sortOrder === 1 ? 'desc' : 'asc';
     this.getData();
   }
 
@@ -187,9 +209,5 @@ export class QuanLySanPhamComponent implements OnInit {
     this.buildForm();
     this.getData();
   }
-
-
-
-  
 
 }

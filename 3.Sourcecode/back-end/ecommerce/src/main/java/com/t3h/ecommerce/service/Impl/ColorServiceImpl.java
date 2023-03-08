@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,6 +28,22 @@ public class ColorServiceImpl implements ColorService {
 
     @Autowired
     private ModelMapper mapper;
+
+    @Override
+    public BaseResponse<?> getAllColor() {
+        try{
+            Iterable<Color> iterable= repository.findAll();
+            List<Color> list = new ArrayList<>();
+            iterable.forEach(x -> list.add(x));
+            List<ColorDTO> result = list.stream().map(ColorDTO::new).collect(Collectors.toList());
+
+            return BaseResponse.builder().data(result).message("request success").status(HttpStatus.OK.value()).build();
+
+        }catch (Exception ex){
+            return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
+
     @Override
     public PageResponse<ColorDTO> findColor(PageColorRequest pageColorRequest) {
         List<ColorDTO> list = new ArrayList<>();

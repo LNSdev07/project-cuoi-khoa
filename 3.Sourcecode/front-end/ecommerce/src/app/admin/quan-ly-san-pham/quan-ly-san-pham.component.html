@@ -21,7 +21,7 @@
         <p-inputNumber placeholder="Cost ( +-100 USD)" formControlName="cost"></p-inputNumber>
       </div>
       <div class="field col-4">
-        <p-dropdown formControlName="categoryId" placeholder="CategotyID" [options]="gender" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
+        <p-dropdown formControlName="categoryId" placeholder="CategotyID" [options]="category" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-4">
           <p-calendar [showIcon]="true" formControlName="createdDate"  selectionMode="range" placeholder="CreatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
@@ -83,7 +83,7 @@
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Customers"
   [rowsPerPageOptions]="[5, 10, 15]"
   sortMode="single"
-  sortField="productName"
+  sortField="createdDate"
   [resizableColumns]="true"
 >
   <ng-template pTemplate="header">
@@ -118,7 +118,7 @@
   <ng-template pTemplate="body" let-product>
     <tr>
       <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
-      <td class="cursor-pointer underline" style="min-width: 100px">{{ product.productName }}</td>
+      <td (click)="createOrEdit(product)" class="cursor-pointer underline" style="min-width: 100px">{{ product.productName }}</td>
       <td style="min-width: 100px">{{ product.shortDescription }}</td>
       <td style="min-width: 180px">{{ product.cost }}</td>
       <td style="min-width: 180px">{{ product.quantity }}</td>

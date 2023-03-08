@@ -1,9 +1,7 @@
 package com.t3h.ecommerce.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -13,6 +11,7 @@ import javax.persistence.Table;
 
 @Getter
 @Setter
+@SuperBuilder
 @MappedSuperclass
 public abstract class BaseEntity {
 
