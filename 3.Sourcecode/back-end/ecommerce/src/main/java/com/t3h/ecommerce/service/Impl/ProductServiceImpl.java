@@ -135,20 +135,20 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public BaseResponse<?> findProductById(String id) {
-        if(id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
         }
         try {
             Product product = repository.getReferenceById(Long.parseLong(id.trim()));
             List<Image> images = imageRepository.findByProductId(Long.parseLong(id.trim()));
             List<String> list = new ArrayList<>();
-            if(images != null){
-                list = images.stream().map(item ->{
+            if (images != null) {
+                list = images.stream().map(item -> {
                     String url = item.getUrl();
                     return url;
                 }).collect(Collectors.toList());
             }
-            if(product!= null && list != null && !list.isEmpty()){
+            if (product != null && list != null && !list.isEmpty()) {
                 ProductAdminAddRequest response = ProductAdminAddRequest.builder().productName(product.getProductName())
                         .quantity(product.getQuantity()).cost(product.getCost()).shortDescription(product.getShortDescription())
                         .description(product.getDescription()).colorId(product.getColor().getId())
@@ -158,11 +158,12 @@ public class ProductServiceImpl implements ProductService {
             }
 
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
 
     @Override
-
     public BaseResponse<?> findProductForHome(com.t3h.ecommerce.dto.request.PageRequest pageRequest) {
         if(pageRequest.getPage() <=0 || pageRequest.getPageSize() <= 0){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
@@ -181,4 +182,5 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
+
 }
