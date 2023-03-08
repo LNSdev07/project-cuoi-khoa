@@ -23,7 +23,7 @@ public class Discount extends BaseEntity {
     @Column(name = "discount_percent")
     private Float discountPercent;
 
-    @ManyToMany(mappedBy = "discounts", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "discount", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Product> product;
 
 

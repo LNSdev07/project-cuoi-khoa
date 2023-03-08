@@ -1,7 +1,9 @@
 package com.t3h.ecommerce.service.Impl;
 
 import com.t3h.ecommerce.dto.response.PageResponse;
+import com.t3h.ecommerce.entities.product.Color;
 import com.t3h.ecommerce.entities.product.Discount;
+import com.t3h.ecommerce.pojo.dto.color.ColorDTO;
 import com.t3h.ecommerce.pojo.dto.discount.DiscountDTO;
 import com.t3h.ecommerce.pojo.dto.discount.PageDiscountRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -88,6 +91,21 @@ public class DiscountServiceImpl implements DiscountService {
             return new BaseResponse<>(200,0l, "success", new DiscountDTO());
         }catch (Exception e){
             return new BaseResponse<>(309,0l, "fail", new DiscountDTO());
+        }
+    }
+
+    @Override
+    public BaseResponse<?> getAllDiscount() {
+        try{
+            Iterable<Discount> iterable= repository.findAll();
+            List<Discount> list = new ArrayList<>();
+            iterable.forEach(x -> list.add(x));
+            List<DiscountDTO> result = list.stream().map(DiscountDTO::new).collect(Collectors.toList());
+
+            return BaseResponse.builder().data(result).message("request success").status(HttpStatus.OK.value()).build();
+
+        }catch (Exception ex){
+            return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 }

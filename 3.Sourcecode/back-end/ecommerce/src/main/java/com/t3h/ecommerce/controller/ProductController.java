@@ -1,6 +1,7 @@
 package com.t3h.ecommerce.controller;
 
 
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdminAddRequest;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.service.ProductService;
@@ -29,6 +30,16 @@ public class ProductController {
     @PostMapping("admin/product")
     BaseResponse<?> findProduct(@Valid @RequestBody ProductAdminRequest request){
         return service.findProduct(request);
+    }
+
+    @PostMapping("admin/add-product")
+    BaseResponse<?> addProduct(@Valid @RequestBody ProductAdminAddRequest request){
+        return service.addProduct(request);
+    }
+
+    @GetMapping("admin/product")
+    BaseResponse<?> detailProduct(@Valid @RequestParam("id") String id){
+        return service.findProductById(id);
     }
 
 

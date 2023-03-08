@@ -7,6 +7,8 @@ import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface ColorService {
 
+    BaseResponse<?> getAllColor();
+
     PageResponse<ColorDTO> findColor(PageColorRequest pageColorRequest);
 
     BaseResponse<ColorDTO> getColorById(String id);

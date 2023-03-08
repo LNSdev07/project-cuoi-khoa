@@ -7,5 +7,5 @@ import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface CategoryService {
 
-
+    BaseResponse<?> getAllCategory();
 }

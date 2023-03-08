@@ -16,4 +16,5 @@ public interface DiscountService {
 
     BaseResponse<DiscountDTO> deleteById(String id);
 
+    BaseResponse<?> getAllDiscount();
 }

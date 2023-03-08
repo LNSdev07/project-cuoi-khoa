@@ -19,26 +19,10 @@ public class DiscountController {
     @Autowired
     private DiscountService service;
 
-
-    @PostMapping("discounts")
-    public PageResponse<DiscountDTO> findDiscount(@Valid @RequestBody PageDiscountRequest pageDiscountRequest){
-        return service.findDiscount(pageDiscountRequest);
+    @GetMapping("/public/discounts")
+    public BaseResponse<?> getAllDiscount(){
+        return service.getAllDiscount();
     }
 
-    @PostMapping("discount")
-    public BaseResponse<DiscountDTO> addDisCount(@Valid @RequestBody DiscountDTO discountDTO){
-        return service.addDiscount(discountDTO);
-    }
-
-
-    @GetMapping("discount")
-    public BaseResponse<DiscountDTO> getDiscount(@Valid @RequestParam("id") String id){
-        return service.getDiscountById(id);
-    }
-
-    @DeleteMapping("discount")
-    public BaseResponse<DiscountDTO> deleteById(@Valid @RequestParam("id") String id){
-        return service.deleteById(id);
-    }
 
 }

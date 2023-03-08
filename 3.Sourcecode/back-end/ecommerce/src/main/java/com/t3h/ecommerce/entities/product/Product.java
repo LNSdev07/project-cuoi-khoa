@@ -4,13 +4,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.t3h.ecommerce.entities.BaseEntity;
 import com.t3h.ecommerce.entities.order.OrderDetail;
 import com.t3h.ecommerce.entities.order.Orders;
+import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Table(name = "product")
+@SuperBuilder
+@Builder
 @Entity
 public class Product extends BaseEntity {
     @Id
@@ -42,31 +47,45 @@ public class Product extends BaseEntity {
     private Category category;
 
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Image> images;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Review> reviews;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_color",
-    joinColumns = @JoinColumn(name = "product_id"),
-    inverseJoinColumns = @JoinColumn(name = "color_id"))
-    private List<Color> colors;
+    @ManyToOne
+    @JoinColumn(name = "size_id", nullable = false)
+    private Size size;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_size",
-    joinColumns = @JoinColumn(name = "product_id"),
-    inverseJoinColumns = @JoinColumn(name = "size_id"))
-    private List<Size> sizes;
+    @ManyToOne
+    @JoinColumn(name = "discount_id", nullable = false)
+    private Discount discount;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "product_discount",
-    joinColumns = @JoinColumn(name = "product_id"),
-    inverseJoinColumns = @JoinColumn(name = "discount_id"))
-    private List<Discount> discounts;
+    @ManyToOne
+    @JoinColumn(name = "color_id", nullable = false)
+    private Color color;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<OrderDetail> orderDetails;
 
+    public Product(Long createdDate, Long updatedDate, String productName, String shortDescription,
+                   String description, String imgAvt, Double cost,
+                   Long quantity, Category category,
+                   Size size, Discount discount, Color color) {
+        super(createdDate, updatedDate);
+        this.productName = productName;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.imgAvt = imgAvt;
+        this.cost = cost;
+        this.quantity = quantity;
+        this.category = category;
+        this.size = size;
+        this.discount = discount;
+        this.color = color;
+    }
+
+    public Product() {
+
+    }
 }
