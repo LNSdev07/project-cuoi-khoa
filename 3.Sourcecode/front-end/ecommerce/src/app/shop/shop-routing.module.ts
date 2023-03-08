@@ -8,6 +8,7 @@ import {ProfileDetailsComponent} from './profile-details/profile-details.compone
 import {ErrorComponent} from './error/error.component';
 import { ShopComponent } from './shop.component';
 import {ContactComponent} from "./contact/contact.component";
+import {FaqComponent} from "./faq/faq.component";
 
 
 const routes: Routes = [{path: '', component: HomeComponent},
@@ -17,6 +18,7 @@ const routes: Routes = [{path: '', component: HomeComponent},
   {path: 'orders', component: CheckoutComponent},
   {path: 'product-single', component: ProductSingleComponent},
   {path: 'profile-detail', component: ProfileDetailsComponent},
+  {path: 'faq',component:FaqComponent},
   {path:'contact',component: ContactComponent},
   {path: '**', component: ErrorComponent}];
 
