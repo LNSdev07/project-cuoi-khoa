@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white w-100 navigation" id="navbar">
+<nav class="navbar navbar-expand-lg navbar-light bg-white w-100 navigation" id="navbar" style="background-color: #e7e7e7 !important;">
   <div class="container">
     <a class="navbar-brand font-weight-bold" routerLink="/">E-Shop</a>
 
@@ -14,54 +14,46 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="#">About Us</a>
+          <a class="nav-link" routerLink="shop/shop-page">Shop</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="shop/contact" >Contact</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="shop/faq">FAQs</a>
         </li>
         <!-- Pages -->
-        <li class="nav-item dropdown dropdown-slide">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-delay="350"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Pages.
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Blog Single</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">404 Page</a></li>
-            <li><a href="#">FAQ</a></li>
-          </ul>
-        </li><!-- /Pages -->
+<!--        <li class="nav-item dropdown dropdown-slide">-->
+<!--          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown4" role="button" data-delay="350"-->
+<!--             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--            Pages.-->
+<!--          </a>-->
+<!--          <ul class="dropdown-menu" aria-labelledby="navbarDropdown4">-->
+<!--            <li><a href="#">About Us</a></li>-->
+<!--            <li><a href="#">Blog</a></li>-->
+<!--            <li><a href="#">Blog Single</a></li>-->
+<!--            <li><a href="#">Contact</a></li>-->
+<!--            <li><a href="#">404 Page</a></li>-->
+<!--            <li><a href="#">FAQ</a></li>-->
+<!--          </ul>-->
+<!--        </li>&lt;!&ndash; /Pages &ndash;&gt;-->
         <!-- / Blog -->
 
         <li class="nav-item dropdown dropdown-slide">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-delay="350"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Shop.
+            About Us.
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-            <li><a routerLink="/shop">Shop</a></li>
-            <li><a routerLink="/product-single">Product Details</a></li>
-            <li><a routerLink="/checkout">Checkout</a></li>
-            <li><a routerLink="/cart">Cart</a></li>
+            <li><a routerLink="/shop/contact">About Us</a></li>
+<!--            <li><a routerLink="/product-single">Product Details</a></li>-->
+<!--            <li><a routerLink="/checkout">Checkout</a></li>-->
+<!--            <li><a routerLink="/cart">Cart</a></li>-->
           </ul>
         </li><!-- / Blog -->
 
-        <!-- Account -->
-        <li class="nav-item dropdown dropdown-slide">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
-             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Account.
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown5">
-            <li><a routerLink="/dashboard">Dahsboard</a></li>
-            <li><a routerLink="/order">Orders</a></li>
-            <li><a routerLink="/address">Address</a></li>
-            <li><a routerLink="/profile-details">Profile Details</a></li>
-            <li><a routerLink="/login">Login Page</a></li>
-            <li><a routerLink="/signup">SignUp Page</a></li>
-            <li><a routerLink="/forgot-password">Forgot Password</a></li>
-          </ul>
-        </li><!-- / Account -->
+
       </ul>
     </div>
 
@@ -70,12 +62,32 @@
       <button *ngIf="!checkedLogin" routerLink = '/auth/sign-up' pButton pRipple  label="Register" icon="pi pi-user-plus"></button>
       <span *ngIf="checkedLogin" class="mt-3 mr-3"><strong>{{name}}</strong></span>
       <p-avatar *ngIf="checkedLogin" shape="circle" image="{{avatar}}" pBadge value="4" severity="danger" size="large"></p-avatar>
-      <button *ngIf="checkedLogin" (click)="logout()" pButton pRipple  icon="pi pi-power-off"  label="Logout" class="p-button-danger mx-3"></button>
+      <ul class="navbar-nav mx-auto">
+        <!-- Account -->
+        <li *ngIf="checkedLogin" class="nav-item dropdown dropdown-slide">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown5" role="button" data-delay="350"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-angle-double-down" aria-hidden="true"></i>
+          </a>
+          <ul class="dropdown-menu position-admin-down" aria-labelledby="navbarDropdown5">
+            <li><a routerLink="/dashboard">Dahsboard</a></li>
+            <li><a routerLink="/order">Orders</a></li>
+            <li><a routerLink="/address">Address</a></li>
+            <li><a routerLink="/profile-details">Profile Details</a></li>
+            <li><a routerLink="/login">Login Page</a></li>
+            <li><a routerLink="/signup">SignUp Page</a></li>
+            <li><a routerLink="/forgot-password">Forgot Password</a></li>
+            <li>
+              <button *ngIf="checkedLogin" (click)="logout()" pButton pRipple  icon="pi pi-power-off"  label="Logout" class="p-button-danger mx-3"></button>
+            </li>
+          </ul>
+        </li><!-- / Account -->
+      </ul>
     </div>
 
- 
 
-  
+
+
 
 
 
