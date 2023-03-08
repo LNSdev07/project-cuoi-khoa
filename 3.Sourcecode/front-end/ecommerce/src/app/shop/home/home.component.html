@@ -98,7 +98,8 @@
     </div>
 
 
-    <div class="row">
+<!--    api-not-response-->
+    <div *ngIf="!checkProductSize" class="row">
       <div class="col-lg-3 col-12 col-md-6 col-sm-6 mb-5" >
         <div class="product">
           <div class="product-wrap">
@@ -270,6 +271,36 @@
         </div>
       </div>
     </div>
+<!--    end-->
+    <div *ngIf="checkProductSize" class="row">
+      <div class="col-lg-3 col-12 col-md-6 col-sm-6 mb-5"
+           *ngFor="let productDetail of products">
+        <div class="product">
+          <div class="product-wrap">
+            <a routerLink="/shop/product-single"><img class="img-fluid w-100 mb-3 img-first" src="{{productDetail.imgAvt}}" alt="product-img" /></a>
+            <a routerLink="/shop/product-single"><img class="img-fluid w-100 mb-3 img-second" src="{{productDetail.imgAvt}}" alt="product-img" /></a>
+          </div>
+
+          <span class="onsale">Sale</span>
+          <div class="product-hover-overlay">
+            <a routerLink="/shop/cart"><i class="tf-ion-android-cart"></i></a>
+            <!--            <a href="#"><i class="tf-ion-ios-heart"></i></a>-->
+          </div>
+
+          <div class="product-info">
+            <h2 class="product-title h5 mb-0"><a href="#">{{productDetail.productName}}</a></h2>
+            <span class="price">
+                      {{productDetail.cost}} USA
+                  </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="paginator-center">
+     <p-paginator styleClass="" [rows]="10" [totalRecords]="totalRecords" [rowsPerPageOptions]="[10,20,30]" (onPageChange)="paginate($event)"></p-paginator>
+    </div>
+
   </div>
 </section>
 <!-- /portfolio -->
