@@ -2,6 +2,7 @@ package com.t3h.ecommerce.service.Impl;
 
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminRequest;
+import com.t3h.ecommerce.dto.request.home_product.ProductHomeDTO;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.entities.product.Product;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
@@ -76,6 +77,25 @@ public class ProductServiceImpl implements ProductService {
             return BaseResponse.builder().message("delete success").status(HttpStatus.OK.value()).build();
         } catch (Exception ex){
             return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
+    @Override
+
+    public BaseResponse<?> findProductForHome(com.t3h.ecommerce.dto.request.PageRequest pageRequest) {
+        if(pageRequest.getPage() <=0 || pageRequest.getPageSize() <= 0){
+            return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+        try {
+            Pageable pageable = PageRequest.of(pageRequest.getPage()-1,pageRequest.getPageSize());
+
+            Page<Product> page = repository.findProductForHome(pageable);
+            if (page==null) return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
+
+            List<ProductHomeDTO> list = page.getContent().stream().map(ProductHomeDTO::new).collect(Collectors.toList());
+
+            return BaseResponse.builder().totalRecords(page.getTotalElements()).data(list).message("request success").status(200).build();
+        }catch (Exception e){
+            return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 }
