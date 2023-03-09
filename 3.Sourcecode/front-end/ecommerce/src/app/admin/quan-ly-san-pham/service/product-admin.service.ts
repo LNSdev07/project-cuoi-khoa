@@ -65,7 +65,7 @@ export class ProductAdminService {
     )
   }
 
-  public addProduct(request: FormAddProductModel):Observable<BaseReponse<any>>{
+  public createOrEditProduct(request: FormAddProductModel):Observable<BaseReponse<any>>{
     return this.http.post<BaseReponse<any>>(this.URL_ADD_PRODUCT, request ).pipe(
       catchError(this.handleErr.handleError)
     )

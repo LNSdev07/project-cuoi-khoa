@@ -50,6 +50,27 @@ export class CreateOrEditProductComponent implements OnInit {
     }
   ] 
 
+
+
+  images!: any[];
+
+  responsiveOptions:any[] = [
+      {
+        breakpoint: '1024px',
+        numVisible: 5
+      },
+      {
+        breakpoint: '768px',
+        numVisible: 3
+      },
+      {
+        breakpoint: '560px',
+        numVisible: 1
+      }
+  ];
+
+
+
   constructor(public ref: DynamicDialogRef,
             private uploadFileService: UpLoadFileService,
             private productAdminService: ProductAdminService,
@@ -131,6 +152,7 @@ export class CreateOrEditProductComponent implements OnInit {
 
   getInput(): FormAddProductModel{
     const input: FormAddProductModel ={
+      id: this.product? this.product.id:0,
       productName: this.AddForm.controls['productName'].value ?? '',
       quantity: this.AddForm.controls['quantity'].value ?? 0,
       cost: this.AddForm.controls['cost'].value ?? 0,
@@ -157,13 +179,13 @@ export class CreateOrEditProductComponent implements OnInit {
 
   onSave(){
     const input = this.getInput();
-    this.productAdminService.addProduct(input).subscribe(res =>{
+    this.productAdminService.createOrEditProduct(input).subscribe(res =>{
       if(res.status == 200){
         const confirm = this.dialogService.open(PopupConfirmComponent, {
           showHeader: false,
           baseZIndex: 10000,
           data: {
-            title: 'Bạn đã tạo mới sản phẩm thành công',
+            title: this.product? 'Bạn đã chỉnh sửa thông tin sản phẩm thành công': 'Bạn đã tạo mới sản phẩm thành công',
             content: '',
             status: 0
           }
@@ -191,6 +213,7 @@ export class CreateOrEditProductComponent implements OnInit {
   }
 
   chooseFile(e?: any){
+    this.urlImgDetail =[];
     let arr =[];
     let arrRes: string[] =[]
     if(e) arr = e;
