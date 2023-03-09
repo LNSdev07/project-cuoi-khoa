@@ -28,6 +28,10 @@ public abstract class BaseEntity {
         this.updatedDate = updatedDate;
     }
 
+    public BaseEntity(Long updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     public BaseEntity() {
     }
 }

@@ -1,4 +1,5 @@
 export interface FormAddProductModel{
+    id: number;
     productName: string;
     quantity: number;
     cost: number;

@@ -15,7 +15,7 @@ public interface ProductService {
 
     BaseResponse<?> deleteProduct(String Ids);
 
-    BaseResponse<?> addProduct(ProductAdminAddRequest request);
+    BaseResponse<?> createOrEditProduct(ProductAdminAddRequest request);
 
     BaseResponse<?> findProductById(String id);
 

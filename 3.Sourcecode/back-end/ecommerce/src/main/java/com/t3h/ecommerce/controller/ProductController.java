@@ -33,8 +33,8 @@ public class ProductController {
     }
 
     @PostMapping("admin/add-product")
-    BaseResponse<?> addProduct(@Valid @RequestBody ProductAdminAddRequest request){
-        return service.addProduct(request);
+    BaseResponse<?> createOrEditProduct(@Valid @RequestBody ProductAdminAddRequest request){
+        return service.createOrEditProduct(request);
     }
 
     @GetMapping("admin/product")

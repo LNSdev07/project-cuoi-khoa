@@ -12,11 +12,11 @@ public class ProductAdminDTO {
     private String shortDescription;
     private Double cost;
     private Long quantity;
-    private Long category;
+    private Long categoryId;
     private Long createdDate;
     private Long updatedDate;
 
-    public ProductAdminDTO(Product product){
+    public ProductAdminDTO(ProductAdmin product){
         BeanUtils.copyProperties(product,this);
     }
 }

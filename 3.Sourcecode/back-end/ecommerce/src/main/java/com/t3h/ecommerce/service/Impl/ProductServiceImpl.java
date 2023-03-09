@@ -1,5 +1,6 @@
 package com.t3h.ecommerce.service.Impl;
 
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdmin;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminAddRequest;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminRequest;
@@ -57,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
                     (request.getPageRequest().getSortBy().isEmpty() || request.getPageRequest().getSortBy().equals("createdDate"))?
                     "createdDate": request.getPageRequest().getSortBy());
 
-            Page<Product> page = repository.findProduct(pageable,
+            Page<ProductAdmin> page = repository.findProduct(pageable,
                     request.getProductName(), request.getQuantity(), request.getCost(), request.getCategoryId(),
                     request.getFilterDate().getCreatedDateStart(), request.getFilterDate().getCreatedDateEnd(),
                     request.getFilterDate().getUpdatedDateStart(), request.getFilterDate().getUpdatedDateEnd());
@@ -85,15 +86,18 @@ public class ProductServiceImpl implements ProductService {
                 ids.add(Long.parseLong(arr[i]));
             }
             repository.deleteProduct(ids);
+
+            imageRepository.deleteImageByListProduct(ids);
             return BaseResponse.builder().message("delete success").status(HttpStatus.OK.value()).build();
         } catch (Exception ex){
+            log.error(ex.getMessage());
             return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 
 
     @Override
-    public BaseResponse<?> addProduct(ProductAdminAddRequest request) {
+    public BaseResponse<?> createOrEditProduct(ProductAdminAddRequest request) {
         try {
             boolean existColor =  colorRepository.existsById(request.getColorId());
             boolean existSize = sizeRepository.existsById(request.getSizeId());
@@ -109,10 +113,31 @@ public class ProductServiceImpl implements ProductService {
             Discount discount = discountRepository.getReferenceById(request.getDiscountId());
             Category category = categoryRepository.getReferenceById(request.getCategoryId());
 
-            Product product = new Product(new Date().getTime(), new Date().getTime(),
-                    request.getProductName(), request.getShortDescription(), request.getDescription(),
-                    request.getUrlImg().get(0), request.getCost(), request.getQuantity(),
-                    category, size, discount, color);
+            Product product;
+            if(request.getId() != null && request.getId() == 0){
+                 product = new Product(new Date().getTime(), new Date().getTime(),
+                        request.getProductName(), request.getShortDescription(), request.getDescription(),
+                        request.getUrlImg().get(0), request.getCost(), request.getQuantity(),
+                        category, size, discount, color);
+                log.warn("da khoi tao doi tuong THEM MOI thanh cong");
+            }
+            else{
+                 product = repository.getReferenceById(request.getId());
+                if(product == null){
+                    return BaseResponse.builder().message("product not found").status(HttpStatus.NOT_FOUND.value()).build();
+                }
+                product.setProductName(request.getProductName());
+                product.setUpdatedDate(new Date().getTime());
+                product.setCost(request.getCost());
+                product.setColor(color);
+                product.setCategory(category);
+                product.setDiscount(discount);
+                product.setQuantity(request.getQuantity());
+                product.setDescription(request.getDescription());
+                product.setShortDescription(request.getShortDescription());
+                imageRepository.deleteByProductId(request.getId());
+                log.warn("da khoi tao doi tuong CHINH SUA thanh cong");
+            }
 
             List<Image> images = request.getUrlImg().stream()
                     .map(url -> {
@@ -129,26 +154,27 @@ public class ProductServiceImpl implements ProductService {
 
         }catch (Exception e){
             log.error("call repository failed!");
+            log.error(e.getMessage());
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 
     @Override
     public BaseResponse<?> findProductById(String id) {
-        if(id == null || id.isEmpty()){
+        if (id == null || id.isEmpty()) {
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
         }
         try {
             Product product = repository.getReferenceById(Long.parseLong(id.trim()));
             List<Image> images = imageRepository.findByProductId(Long.parseLong(id.trim()));
             List<String> list = new ArrayList<>();
-            if(images != null){
-                list = images.stream().map(item ->{
+            if (images != null) {
+                list = images.stream().map(item -> {
                     String url = item.getUrl();
                     return url;
                 }).collect(Collectors.toList());
             }
-            if(product!= null && list != null && !list.isEmpty()){
+            if (product != null && list != null && !list.isEmpty()) {
                 ProductAdminAddRequest response = ProductAdminAddRequest.builder().productName(product.getProductName())
                         .quantity(product.getQuantity()).cost(product.getCost()).shortDescription(product.getShortDescription())
                         .description(product.getDescription()).colorId(product.getColor().getId())
@@ -158,11 +184,12 @@ public class ProductServiceImpl implements ProductService {
             }
 
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
-        }catch (Exception ex){
+        } catch (Exception ex) {
             return BaseResponse.builder().message("request failed").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
 
     @Override
-
     public BaseResponse<?> findProductForHome(com.t3h.ecommerce.dto.request.PageRequest pageRequest) {
         if(pageRequest.getPage() <=0 || pageRequest.getPageSize() <= 0){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
@@ -181,4 +208,5 @@ public class ProductServiceImpl implements ProductService {
 
         }
     }
+
 }

@@ -132,11 +132,31 @@
                         <div>
                           <p-progressSpinner class="flex justify-content-center" *ngIf="isLoading"></p-progressSpinner>
                         </div>
-                        <div *ngIf="urlImgDetail.length != 0">
-                          <div *ngFor="let item of urlImgDetail; let i = index">
+                        <div *ngIf="urlImgDetail.length != 0" >
+                          <!-- <div *ngFor="let item of urlImgDetail; let i = index"  class="p-fluid grid">
                             <p-image  class="flex justify-content-center" src="{{item}}" alt="Image" [preview]="true" width="250px"></p-image>
-                          </div>
+                              <div class="field col-4">
+                                <p-image  class="flex justify-content-center" src="{{item}}" alt="Image" [preview]="true" width="250px"></p-image>
+                              </div>
+                          </div> -->
+                        <p-galleria class="flex justify-content-center"   [value]="urlImgDetail" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5"
+                          [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+                          <ng-template pTemplate="item" let-item>
+                              <img [src]="item" style="width: 100%; display: block;" />
+                          </ng-template>
+                          <!-- <ng-template pTemplate="thumbnail" let-item>
+                              <div class="grid grid-nogutter justify-content-center">
+                                  <img [src]="item.thumbnailImageSrc" style="display: block;" />
+                              </div>
+                          </ng-template> -->
+                      </p-galleria>
+
+                       
                         </div>
+                         
+              
+
+
                     </ng-template>
                     
                     </p-fileUpload>

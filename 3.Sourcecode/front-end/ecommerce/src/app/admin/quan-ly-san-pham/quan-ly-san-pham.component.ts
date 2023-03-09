@@ -163,6 +163,8 @@ export class QuanLySanPhamComponent implements OnInit {
     this.productAdminService.findProduct(input).subscribe(res =>{
       this.totalRecords = res.totalRecords;
       this.products = res.data;
+
+      console.log(this.products)
       // this.isLoading = true;
       if(this.products.length != 0) this.isLoading = false
     })
@@ -181,7 +183,7 @@ export class QuanLySanPhamComponent implements OnInit {
       productName: this.FilterForm.controls['productName'].value,
       quantity: this.FilterForm.controls['quantity'].value??0,
       cost: this.FilterForm.controls['cost'].value??0,
-      categoryId: this.FilterForm.controls['categoryId'].value
+      categoryId: this.FilterForm.controls['categoryId'].value??0,
     }
 
     return input;
@@ -200,6 +202,7 @@ export class QuanLySanPhamComponent implements OnInit {
     this.paginator.sortBy = e.sortField;
     this.paginator.condition = e.sortOrder === 1 ? 'desc' : 'asc';
     this.getData();
+    // console.log(this.getParam())
   }
 
   search(){

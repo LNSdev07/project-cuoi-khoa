@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductAdminAddRequest {
+    private Long id;
     private String productName;
     private Long quantity;
     private Double cost;
