@@ -8,12 +8,16 @@ import com.t3h.ecommerce.dto.request.home_product.ProductHomeDTO;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.entities.product.*;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
+import com.t3h.ecommerce.pojo.dto.user.UserDTO;
 import com.t3h.ecommerce.repositories.*;
 import com.t3h.ecommerce.service.ProductService;
 import com.t3h.ecommerce.utils.ExcelUtils;
 import com.t3h.ecommerce.utils.ExportConfig;
+import com.t3h.ecommerce.utils.FileFactory;
+import com.t3h.ecommerce.utils.ImportConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -27,6 +31,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.io.ByteArrayInputStream;
@@ -41,22 +46,22 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
-    @Autowired
+
     private final ProductRepository repository;
 
-    @Autowired
+
     private final CategoryRepository categoryRepository;
 
-    @Autowired
+
     private final ColorRepository colorRepository;
 
-    @Autowired
+
     private final SizeRepository sizeRepository;
 
-    @Autowired
+
     private final DiscountRepository discountRepository;
 
-    @Autowired
+
     private final ImageRepository imageRepository;
 
     @Override
@@ -254,6 +259,48 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception e) {
             log.info("export fail!");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Override
+    public BaseResponse<?> importExcelProduct(MultipartFile importFile) {
+        Workbook workbook = FileFactory.getWorkbookStream(importFile);
+        List<ProductAdminDTO> productAdminDTOS = ExcelUtils.getImportData(workbook, ImportConfig.productImport);
+
+        if(!CollectionUtils.isEmpty(productAdminDTOS)){
+            saveData(productAdminDTOS);
+            return BaseResponse.builder().message("import success").status(HttpStatus.OK.value()).build();
+        }
+        else{
+            return BaseResponse.builder().message("import failed").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+
+    }
+
+    private void saveData(List<ProductAdminDTO> productAdminDTOS) {
+        for(ProductAdminDTO productAdminDTO: productAdminDTOS){
+            Category category = categoryRepository.getReferenceById(productAdminDTO.getCategoryId());
+
+            Color color = colorRepository.getReferenceById(1l);
+            Size size = sizeRepository.getReferenceById(1l);
+            Discount discount = discountRepository.getReferenceById(1l);
+
+            if(category == null || color == null || size == null || discount == null){
+                log.info("CATEGORY NOT FOUND!");
+                return ;
+            }
+            Product product = Product.builder().productName(productAdminDTO.getProductName())
+                    .shortDescription(productAdminDTO.getShortDescription()).cost(productAdminDTO.getCost())
+                    .quantity(productAdminDTO.getQuantity()).build();
+            product.setCreatedDate(productAdminDTO.getCreatedDate());
+            product.setUpdatedDate(productAdminDTO.getUpdatedDate());
+            product.setCategory(category);
+
+            product.setColor(color);
+            product.setSize(size);
+            product.setDiscount(discount);
+
+            repository.save(product);
         }
     }
 

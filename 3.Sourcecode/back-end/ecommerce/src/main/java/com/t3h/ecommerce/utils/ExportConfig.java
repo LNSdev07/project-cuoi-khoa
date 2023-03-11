@@ -3,6 +3,7 @@ package com.t3h.ecommerce.utils;
 
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.entities.core.User;
+import com.t3h.ecommerce.pojo.dto.user.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,8 +34,8 @@ public class ExportConfig {
         customerCellConfig.add(new CellConfig(4, "gender"));
         customerCellConfig.add(new CellConfig(5, "status"));
         customerCellConfig.add(new CellConfig(6, "address"));
-        customerCellConfig.add(new CellConfig(7, "email"));
-        customerCellConfig.add(new CellConfig(8, "avatar"));
+//        customerCellConfig.add(new CellConfig(7, "email"));
+//        customerCellConfig.add(new CellConfig(8, "avatar"));
         customerExport.setCellExportConfigList(customerCellConfig);
     }
     public static final ExportConfig productExport ;

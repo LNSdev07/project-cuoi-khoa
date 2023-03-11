@@ -2,10 +2,14 @@ package com.t3h.ecommerce.dto.request.admin_product;
 
 import com.t3h.ecommerce.entities.product.Category;
 import com.t3h.ecommerce.entities.product.Product;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductAdminDTO {
     private Long id;
     private String productName;

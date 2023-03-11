@@ -3,9 +3,9 @@
     <h3>Quản Lý Sản Phẩm</h3>
     <div class="flex align-items-center">
       <button pButton pRipple type="button" (click)="createOrEdit()" label="Add new" icon="pi pi-plus" class="mr-2"></button>
-      <button pButton pRipple type="button"   label="Import" icon="pi pi-upload" class="mr-2"
+      <button pButton pRipple type="button" (click)="importExcel()"  label="Import" icon="pi pi-upload" class="p-button-warning  mr-2"
        ></button>
-      <button pButton pRipple type="button" (click)="exportExcel()" label="Export" icon="pi pi-download"></button>
+      <button pButton pRipple type="button" (click)="exportExcel()" label="Export" icon="pi pi-download" class="p-button-help "></button>
     </div>
 </div>
 <p-panel header="" [toggleable]="true" [formGroup]="FilterForm">

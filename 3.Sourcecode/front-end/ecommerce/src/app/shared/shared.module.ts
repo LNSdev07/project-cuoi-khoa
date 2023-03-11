@@ -87,11 +87,13 @@ import {DialogService} from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
 import { PopupConfirmComponent } from './popup-confirm/popup-confirm.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { ImportFileComponent } from './import-file/import-file.component';
 @NgModule({
   declarations: [
     HeaderComponent,
     FooterComponent,
     PopupConfirmComponent,
+    ImportFileComponent,
   ],
   imports: [
     CommonModule,
@@ -99,6 +101,7 @@ import {ReactiveFormsModule} from "@angular/forms";
     ButtonModule,
     AvatarModule,
     AvatarGroupModule,
+    InputTextModule,
     // DynamicDialogConfig,
     // DynamicDialogRef,
   ],

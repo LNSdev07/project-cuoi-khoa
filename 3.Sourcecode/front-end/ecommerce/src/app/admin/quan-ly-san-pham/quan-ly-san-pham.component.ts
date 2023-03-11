@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forkJoin } from 'rxjs';
+import { ImportFileComponent } from 'src/app/shared/import-file/import-file.component';
 import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
 import { FilterDate } from '../common/filter-date.model';
 import { PageRequest } from '../common/page-request.model';
@@ -217,6 +218,25 @@ export class QuanLySanPhamComponent implements OnInit {
   exportExcel(){
     const fileName = 'product.xlsx';
     this.productAdminService.exportExcel(fileName);
+  }
+
+  importExcel(){
+      const URL_IMPORT = this.productAdminService.getApiImport();
+      if (URL_IMPORT == null || URL_IMPORT == undefined) return;
+
+      this.ref = this.dialogService.open(ImportFileComponent, {
+      header: 'Import',
+      width: '45%',
+      contentStyle: { 'padding-bottom': '0' },
+      baseZIndex: 10000,
+      data: {
+        url_import: URL_IMPORT
+      },
+    });
+    this.ref.onClose.subscribe(res =>{
+      this.getData();
+    }
+    );
   }
 
 }
