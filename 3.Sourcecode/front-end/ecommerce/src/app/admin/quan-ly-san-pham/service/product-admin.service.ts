@@ -11,7 +11,7 @@ import { SizeModel } from '../../quan-ly-size/model/size.model';
 import { FormAddProductModel } from '../model/form-add-product.model';
 import { ProductAdminReQuestModel } from '../model/product-admin-request.model';
 import { ProductAdminResponse } from '../model/product-admin-response.model';
-
+import { saveAs } from 'file-saver';
 @Injectable({
   providedIn: 'root'
 })
@@ -25,6 +25,8 @@ export class ProductAdminService {
   private URL_ALL_DISCOUNTS = environment.API_LOCAL+'/public/discounts';
   private URL_ADD_PRODUCT = environment.API_LOCAL +'/admin/add-product';
   private URL_DETAIL = environment.API_LOCAL +'/admin/product'
+
+  private URL_EXPORT = environment.API_LOCAL+'/admin/export'
 
 
   constructor(private http: HttpClient,
@@ -76,5 +78,13 @@ export class ProductAdminService {
     return this.http.get<BaseReponse<FormAddProductModel>>(url).pipe(
       catchError(this.handleErr.handleError)
     )
+  }
+
+  public exportExcel(fileName: string){
+    this.http.get(this.URL_EXPORT, { responseType: 'blob' }).pipe(
+      catchError(this.handleErr.handleError)
+      ).subscribe(blob => {
+      saveAs(blob, fileName);
+    });
   }
 }

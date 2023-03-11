@@ -213,4 +213,10 @@ export class QuanLySanPhamComponent implements OnInit {
     this.getData();
   }
 
+
+  exportExcel(){
+    const fileName = 'product.xlsx';
+    this.productAdminService.exportExcel(fileName);
+  }
+
 }

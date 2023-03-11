@@ -9,6 +9,8 @@ import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +48,11 @@ public class ProductController {
     @DeleteMapping("admin/product")
     BaseResponse<?> deleteProduct( @Valid @RequestParam("Ids") String Ids){
         return service.deleteProduct(Ids);
+    }
+
+
+    @GetMapping("admin/export")
+    public ResponseEntity<Resource> exportProduct() {
+        return service.exportExcelProduct();
     }
 }
