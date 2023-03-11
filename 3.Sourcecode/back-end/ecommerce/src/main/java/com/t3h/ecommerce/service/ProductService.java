@@ -9,6 +9,7 @@ import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 
 public interface ProductService {
@@ -24,5 +25,7 @@ public interface ProductService {
     BaseResponse<?> findProductForHome(PageRequest pageRequest);
 
     ResponseEntity<Resource> exportExcelProduct();
+
+    BaseResponse<?> importExcelProduct(MultipartFile importFile);
 
 }

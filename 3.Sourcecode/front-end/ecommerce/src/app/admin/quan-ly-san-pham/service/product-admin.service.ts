@@ -26,7 +26,8 @@ export class ProductAdminService {
   private URL_ADD_PRODUCT = environment.API_LOCAL +'/admin/add-product';
   private URL_DETAIL = environment.API_LOCAL +'/admin/product'
 
-  private URL_EXPORT = environment.API_LOCAL+'/admin/export'
+  private URL_EXPORT = environment.API_LOCAL+'/admin/product/export'
+  private URL_IMPORT = environment.API_LOCAL +'/admin/product/import'
 
 
   constructor(private http: HttpClient,
@@ -86,5 +87,8 @@ export class ProductAdminService {
       ).subscribe(blob => {
       saveAs(blob, fileName);
     });
+  }
+  public getApiImport():string {
+    return this.URL_IMPORT;
   }
 }

@@ -10,11 +10,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.InputStream;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,8 +54,13 @@ public class ProductController {
     }
 
 
-    @GetMapping("admin/export")
+    @GetMapping("admin/product/export")
     public ResponseEntity<Resource> exportProduct() {
         return service.exportExcelProduct();
+    }
+
+    @PostMapping("admin/product/import")
+    public BaseResponse<?> importExcel( @Valid @RequestParam("file") MultipartFile file){
+        return service.importExcelProduct(file);
     }
 }
