@@ -10,18 +10,29 @@ import com.t3h.ecommerce.entities.product.*;
 import com.t3h.ecommerce.pojo.dto.product.ProductDTO;
 import com.t3h.ecommerce.repositories.*;
 import com.t3h.ecommerce.service.ProductService;
+import com.t3h.ecommerce.utils.ExcelUtils;
+import com.t3h.ecommerce.utils.ExportConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -206,6 +217,43 @@ public class ProductServiceImpl implements ProductService {
         }catch (Exception e){
             return BaseResponse.builder().message("request bad").status(HttpStatus.BAD_REQUEST.value()).build();
 
+        }
+    }
+
+    @Override
+    public ResponseEntity<Resource> exportExcelProduct() {
+        try{
+            Page<ProductAdmin> page = repository.findProduct(
+                    PageRequest.of(0, 1000000),
+                    "", 0l, 0.0, 0l, 0l, 0l,
+                    0l, 0l
+            );
+            if(CollectionUtils.isEmpty(page.getContent())){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            List<ProductAdminDTO> listProducts = page.getContent().stream()
+                    .map(ProductAdminDTO::new).collect(Collectors.toList());
+
+            if(!CollectionUtils.isEmpty(listProducts)){
+                String fileName = "product_export"+".xlsx";
+                ByteArrayInputStream in = ExcelUtils.export(listProducts, ExportConfig.productExport, fileName);
+                InputStreamResource inputStreamResource = new InputStreamResource(in);
+                return ResponseEntity.ok()
+                        .header(
+                                HttpHeaders.CONTENT_DISPOSITION,
+                                "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+                        )
+                        .contentType(
+                                MediaType.parseMediaType("application/vnd.ms-excel; charset=UTF-8")
+                        )
+                        .body(inputStreamResource);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            log.info("export fail!");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
