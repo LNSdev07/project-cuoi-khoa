@@ -1,9 +1,7 @@
 package com.t3h.ecommerce.service.Impl;
 
 import com.t3h.ecommerce.dto.response.PageResponse;
-import com.t3h.ecommerce.entities.product.Color;
 import com.t3h.ecommerce.entities.product.Discount;
-import com.t3h.ecommerce.pojo.dto.color.ColorDTO;
 import com.t3h.ecommerce.pojo.dto.discount.DiscountDTO;
 import com.t3h.ecommerce.pojo.dto.discount.PageDiscountRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;

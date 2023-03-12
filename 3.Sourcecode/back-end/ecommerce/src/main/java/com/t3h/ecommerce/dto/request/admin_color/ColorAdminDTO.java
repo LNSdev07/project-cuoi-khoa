@@ -1,4 +1,5 @@
-package com.t3h.ecommerce.pojo.dto.color;
+package com.t3h.ecommerce.dto.request.admin_color;
+
 
 import com.t3h.ecommerce.entities.product.Color;
 import lombok.AllArgsConstructor;
@@ -9,14 +10,14 @@ import org.springframework.beans.BeanUtils;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ColorDTO {
+public class ColorAdminDTO {
     private Long id;
     private String colorName;
     private String colorCode;
     private Long createdDate;
     private Long updatedDate;
 
-    public ColorDTO(Color color){
+    public ColorAdminDTO(Color color){
         BeanUtils.copyProperties(color, this);
     }
 }

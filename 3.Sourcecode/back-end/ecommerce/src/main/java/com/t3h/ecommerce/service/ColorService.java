@@ -1,19 +1,16 @@
 package com.t3h.ecommerce.service;
 
-import com.t3h.ecommerce.dto.response.PageResponse;
-import com.t3h.ecommerce.pojo.dto.color.ColorDTO;
-import com.t3h.ecommerce.pojo.dto.color.PageColorRequest;
+import com.t3h.ecommerce.dto.request.admin_color.ColorAdminAdd;
+import com.t3h.ecommerce.dto.request.admin_color.ColorAdminRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 
 public interface ColorService {
 
     BaseResponse<?> getAllColor();
 
-    PageResponse<ColorDTO> findColor(PageColorRequest pageColorRequest);
+    BaseResponse<?> findColor(ColorAdminRequest request);
 
-    BaseResponse<ColorDTO> getColorById(String id);
+    BaseResponse<?> deleteColor(String ids);
 
-    BaseResponse<ColorDTO> addColor(ColorDTO colorDTO);
-
-    BaseResponse<ColorDTO> deteleById(String id);
+    BaseResponse<?> createOrEdit(ColorAdminAdd request);
 }
