@@ -27,8 +27,6 @@ import java.io.InputStream;
 @RequestMapping("/api/")
 public class ProductController {
 
-
-    @Autowired
     private final ProductService service;
 
 

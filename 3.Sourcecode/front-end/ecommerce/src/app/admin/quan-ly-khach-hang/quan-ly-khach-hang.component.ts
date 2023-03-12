@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { CreateOrEditQuanLyKhachHangComponent } from './create-or-edit-quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang.component';
+import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
+import { PageRequest } from '../common/page-request.model';
+import { CustomerRequest } from './model/customer-request.model';
+import { CustomerResponse } from './model/customer-response.model';
+import { CustomerService } from './service/customer.service';
+
 
 @Component({
   selector: 'app-quan-ly-khach-hang',
@@ -10,32 +16,40 @@ import { CreateOrEditQuanLyKhachHangComponent } from './create-or-edit-quan-ly-k
 })
 export class QuanLyKhachHangComponent implements OnInit {
   ref: DynamicDialogRef = new DynamicDialogRef;
+  filterForm!: FormGroup
   
   customers: any;
   totalRecords=0;
   isLoading = false;
-
-  gender =[
-    {code: 0, name: 'Nam'},
-    {code: 1, name: 'Nữ'}
-  ]
+  selectedCustomer! : CustomerResponse[];
 
   status = [
+    {code: -1, name: 'Tất cả'},
     {code: 1, name: 'Enable'},
     {code: 0, name: 'Disable'},
 
   ]
 
+  paginator: PageRequest={
+    page: 1,
+    pageSize: 5,
+    sortBy: '',
+    condition: 'desc'
+  }
+
   constructor(
     public dialogService: DialogService,
     private messageService: MessageService,
+    private customerService: CustomerService,
+    private fb: FormBuilder,
   ){
 
   }
 
   ngOnInit(): void {
-      this.customers = this.fakeData();
-      this.totalRecords = this.customers.length;
+      this.buildForm();
+      this.selectedCustomer =[];
+      
   }
   isCollapseFilter = false;
   isEnterpriseTab = true;
@@ -44,41 +58,98 @@ export class QuanLyKhachHangComponent implements OnInit {
     this.isCollapseFilter = event.collapsed;
   }
 
-  addOrEdit(severity?: any){
-    this.ref = this.dialogService.open(CreateOrEditQuanLyKhachHangComponent, {
-      header: severity ? 'Detail' : 'Add new Severity',
-      width: '50%',
-      height:'100%',
-      contentStyle: { 'padding-bottom': '0','height':'100%' },
-      baseZIndex: 10000,
-      data: { severity: severity },
-    });
-    this.ref.onClose.subscribe(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: '',
-        life: 3000,
-      });
-      // this.getData();
-    });
-  }
 
   reloadTable(e: any){
-    console.log(e)
+    this.paginator.page = e.first==0? 1: (e.first/e.rows +1);
+    this.paginator.pageSize = e.rows;
+    this.paginator.sortBy = e.sortField;
+    this.paginator.condition = e.sortOrder === 1 ? 'desc' : 'asc';
+    
+    console.log(this.paginator)
+
+    this.getData();
   }
+
+  getInput(): CustomerRequest{
+      const input: CustomerRequest ={
+        pageRequest: this.paginator,
+        textSearch: this.filterForm.controls['textSearch'].value,
+        phoneNumber: this.filterForm.controls['phoneNumber'].value,
+        status:  this.filterForm.controls['status'].value
+      }
+      return input;
+  }
+
+  getData() {
+      const input = this.getInput();
+      this.customerService.findCustomer(input).subscribe(res =>{
+        this.customers = res.data;
+        this.totalRecords = res.totalRecords;
+
+        console.log(this.customers)
+      })
+  }
+
+  buildForm(){
+    this.filterForm = this.fb.group({
+      textSearch: [''],
+      phoneNumber: [''],
+      status: [-1]
+    })
+  }
+
+  refresh(){
+     this.buildForm();
+     this.paginator={
+      page: 1,
+      pageSize: 5,
+      sortBy: '',
+      condition: 'desc'
+    }
+    this.getData();
+  }
+
+ filterData(e: any){
+   this.getData();
+
+ }
+
+ changeStatus(status?: any){
+  const confirm = this.dialogService.open(PopupConfirmComponent, {
+    showHeader: false,
+    baseZIndex: 10000,
+    data: {
+      title: status?'Bạn có chắc muốn kích hoạt cho người dùng này?':'Bạn có chắc muốn khóa người dùng này?',
+      content: '',
+      status: 1
+    }
+  });
+
+  confirm.onClose.subscribe(res => {
+        if(this.selectedCustomer.length != 0 && res === 'yes'){
+          const Ids  = this.selectedCustomer.map(ele => ele.id);
+          this.customerService.changeStatus(status, Ids).subscribe(res =>{
+            this.selectedCustomer =[];
+            if(res.status === 200){this.messageService.add({
+                  severity: 'success',
+                  summary: 'Success',
+                  detail: '',
+                  life: 3000,
+                });
+                this.getData();
+            }
+            else{
+              this.messageService.add({
+                severity: 'error',
+                summary: 'fail',
+                detail: '',
+                life: 3000,
+              });
+            }
+          })
+        }
+  })
+ }
   
-  fakeData(){
-    return [
-    {id : 1,fullName: 'Lai Ngoc Son 1' ,userName: 'sonln1' , status:1, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 2,fullName: 'Lai Ngoc Son 2',userName: 'sonln2', status:0, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 3,fullName: 'Lai Ngoc Son 3',userName: 'sonln3', status:1, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    {id : 4,fullName: 'Lai Ngoc Son 4',userName: 'sonln4', status:0, address:'Thanh hoa', email:'son@gmail.com', 
-    phoneNumber: '0977822938', gender: 1, createdDate: '12/02/2023', updatedDate: '12/03/2023'},
-    ]
-  }
 
 }
