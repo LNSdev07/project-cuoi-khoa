@@ -5,7 +5,7 @@ import { catchError, Observable } from 'rxjs';
 import { HandleErrorService } from 'src/app/common/handle-error/handle-error.service';
 import { BaseReponse } from '../../common/base-response.model';
 import { ColorModel } from '../../quan-ly-color/model/color.model';
-import { CategoryModel } from '../../quan-ly-danh-muc/model/category.model';
+import { CategoryModel } from '../../quan-ly-danh-muc/model/category-response.model';
 import { DiscountModel } from '../../quan-ly-discount/model/discount.model';
 import { SizeModel } from '../../quan-ly-size/model/size.model';
 import { FormAddProductModel } from '../model/form-add-product.model';

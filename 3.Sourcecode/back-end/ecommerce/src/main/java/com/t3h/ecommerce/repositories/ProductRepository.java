@@ -47,6 +47,10 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    @Query("delete from Product p where p.id in :ids")
    void deleteProduct(@Param("ids") List<Long> ids);
 
+   @Modifying
+   @Query(value = "delete from product p where p.category_id in :ids", nativeQuery = true)
+   void deleteProductByCategory(@Param("ids") List<Long> ids);
+
    @Query(value = "select p from Product  p")
    Page<Product> findProductForHome(Pageable pageable);
 
