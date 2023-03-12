@@ -1,11 +1,11 @@
 <div class="device-group-wrapper">
   <div class="flex align-items-center justify-content-between mb-4">
-    <h3>Danh Sách Sản Phẩm</h3>
+    <h3>Quản Lý Sản Phẩm</h3>
     <div class="flex align-items-center">
       <button pButton pRipple type="button" (click)="createOrEdit()" label="Add new" icon="pi pi-plus" class="mr-2"></button>
-      <button pButton pRipple type="button"   label="Import" icon="pi pi-upload" class="mr-2"
+      <button pButton pRipple type="button" (click)="importExcel()"  label="Import" icon="pi pi-upload" class="p-button-warning  mr-2"
        ></button>
-      <button pButton pRipple type="button" label="Export" icon="pi pi-download"></button>
+      <button pButton pRipple type="button" (click)="exportExcel()" label="Export" icon="pi pi-download" class="p-button-help "></button>
     </div>
 </div>
 <p-panel header="" [toggleable]="true" [formGroup]="FilterForm">
@@ -21,7 +21,7 @@
         <p-inputNumber placeholder="Cost ( +-100 USD)" formControlName="cost"></p-inputNumber>
       </div>
       <div class="field col-4">
-        <p-dropdown formControlName="categoryId" placeholder="CategotyID" [options]="gender" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
+        <p-dropdown formControlName="categoryId" placeholder="Categoty" [options]="category" [showClear]="true" optionValue="code"  optionLabel="name"></p-dropdown>
       </div>
       <div class="field col-4">
           <p-calendar [showIcon]="true" formControlName="createdDate"  selectionMode="range" placeholder="CreatedDate" [readonlyInput]="true" inputId="range"></p-calendar>
@@ -74,7 +74,7 @@
   [(selection)] ="selectedProduct"
   [paginator]="true"
   [totalRecords]="totalRecords"
-  [rows]="5"
+  [rows]="10"
   [showCurrentPageReport]="true"
   styleClass="p-datatable-gridlines"
   [rowHover]="true"
@@ -83,7 +83,7 @@
   currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Customers"
   [rowsPerPageOptions]="[5, 10, 15]"
   sortMode="single"
-  sortField="productName"
+  sortField="createdDate"
   [resizableColumns]="true"
 >
   <ng-template pTemplate="header">
@@ -103,8 +103,8 @@
       <th style="min-width: 180px" pSortableColumn="quantity">
         Quantity<p-sortIcon field="quantity"></p-sortIcon>
       </th>
-      <th style="min-width: 180px" pSortableColumn="categoriId">
-        CategotyID<p-sortIcon field="categoriId"></p-sortIcon>
+      <th style="min-width: 180px" pSortableColumn="categoryId">
+        CategotyID<p-sortIcon field="categoryId"></p-sortIcon>
       </th>
       <th style="min-width: 180px" pSortableColumn="createdDate">
         CreatedDate<p-sortIcon field="createdDate"></p-sortIcon>
@@ -118,11 +118,11 @@
   <ng-template pTemplate="body" let-product>
     <tr>
       <td><p-tableCheckbox [value]="product"></p-tableCheckbox></td>
-      <td class="cursor-pointer underline" style="min-width: 100px">{{ product.productName }}</td>
+      <td (click)="createOrEdit(product)" class="cursor-pointer underline" style="min-width: 100px">{{ product.productName }}</td>
       <td style="min-width: 100px">{{ product.shortDescription }}</td>
       <td style="min-width: 180px">{{ product.cost }}</td>
       <td style="min-width: 180px">{{ product.quantity }}</td>
-      <td style="min-width: 180px">{{ product.category }}</td>
+      <td style="min-width: 180px">{{ product.categoryId }}</td>
       <td style="min-width: 180px">{{ product.createdDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
       <td style="min-width: 180px">{{ product.updatedDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
    </tr>

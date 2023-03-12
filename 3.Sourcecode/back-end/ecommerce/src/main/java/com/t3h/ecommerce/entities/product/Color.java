@@ -23,7 +23,7 @@ public class Color extends BaseEntity {
     @Column(name ="color_code")
     private String colorCode;
 
-    @ManyToMany(mappedBy = "colors", fetch = FetchType.LAZY )
+    @OneToMany(mappedBy = "color",fetch = FetchType.LAZY)
     private List<Product> product;
 
     public Color() {

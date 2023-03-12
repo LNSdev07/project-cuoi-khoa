@@ -17,4 +17,6 @@ public interface SizeService {
     BaseResponse<SizeDTO> getSizeById(String id);
 
     BaseResponse<SizeDTO> updateSize(SizeDTO sizeDTO);
+
+    BaseResponse<?> getAllSize();
 }

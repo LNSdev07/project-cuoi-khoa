@@ -2,7 +2,9 @@ package com.t3h.ecommerce.service.Impl;
 
 
 import com.t3h.ecommerce.dto.response.PageResponse;
+import com.t3h.ecommerce.entities.product.Discount;
 import com.t3h.ecommerce.entities.product.Size;
+import com.t3h.ecommerce.pojo.dto.discount.DiscountDTO;
 import com.t3h.ecommerce.pojo.dto.size.PageSizeRequest;
 import com.t3h.ecommerce.pojo.dto.size.SizeDTO;
 import com.t3h.ecommerce.dto.response.BaseResponse;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -99,6 +102,21 @@ public class SizeServiceImpl implements SizeService {
            return  new BaseResponse<>(200,0l, "success", new SizeDTO() );
         }catch (Exception e){
             return new BaseResponse<>(309,0l, "fail", new SizeDTO() );
+        }
+    }
+
+    @Override
+    public BaseResponse<?> getAllSize() {
+        try{
+            Iterable<Size> iterable= repository.findAll();
+            List<Size> list = new ArrayList<>();
+            iterable.forEach(x -> list.add(x));
+            List<SizeDTO> result = list.stream().map(SizeDTO::new).collect(Collectors.toList());
+
+            return BaseResponse.builder().data(result).message("request success").status(HttpStatus.OK.value()).build();
+
+        }catch (Exception ex){
+            return BaseResponse.builder().message("delete fail").status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 

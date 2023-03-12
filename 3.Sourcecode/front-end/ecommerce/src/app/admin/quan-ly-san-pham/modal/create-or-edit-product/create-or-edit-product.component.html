@@ -2,7 +2,7 @@
 <div class="dialog-body-custom" [formGroup]="AddForm" >
     <div >
       <div class="flex justify-content-end">
-        <button  pButton type="button" label="Edit" ></button>
+        <button *ngIf="isDetail" (click)="edit()"  pButton type="button" label="Edit" ></button>
       </div>
     </div>
       <div class="p-fluid grid">
@@ -39,7 +39,7 @@
               </div>
             </div>
             <div class="field col-6">
-                <label class="block">Cost
+                <label class="block">Cost ( USD )
                   <span class="text-danger"> *</span>
                 </label>
                 <p-inputNumber formControlName="cost"  mode="decimal"></p-inputNumber>
@@ -54,7 +54,7 @@
               <label class="block">Category<span class="text-danger"> *</span>
               </label>
               <span class="w-full">
-                <p-dropdown  formControlName="categoryId" optionLabel="name"></p-dropdown>
+                <p-dropdown placeholder="Choose Category" [options]="category" optionValue="code"  formControlName="categoryId" optionLabel="name"></p-dropdown>
               </span>
 
               <div *ngIf="f['categoryId'].invalid && (f['categoryId'].dirty || f['categoryId'].touched)">
@@ -65,9 +65,9 @@
             </div>
 
             <div class="field col-6">
-              <label class="block">Color<span class="text-danger"> *</span>
+              <label  class="block">Color<span class="text-danger"> *</span>
               </label>
-              <p-dropdown  formControlName="color" optionLabel="name"></p-dropdown>
+              <p-dropdown placeholder="Choose Color"  [options]="color" optionValue="code" formControlName="color" optionLabel="name"></p-dropdown>
               <div *ngIf="f['color'].invalid && (f['color'].dirty || f['color'].touched)">
                 <div *ngIf="f['color'].hasError('required')" style="color: rgb(225, 82, 82);">
                   This is a required field.
@@ -78,7 +78,7 @@
             <div class="field col-6">
               <label class="block">Size<span class="text-danger"> *</span>
               </label>
-              <p-dropdown  formControlName="size" optionLabel="name"></p-dropdown>
+              <p-dropdown placeholder="Choose Size" optionValue="code"  [options]="size" formControlName="size" optionLabel="name"></p-dropdown>
               <div *ngIf="f['size'].invalid && (f['size'].dirty || f['size'].touched)">
                 <div *ngIf="f['size'].hasError('required')" style="color: rgb(225, 82, 82);">
                   This is a required field.
@@ -87,9 +87,9 @@
             </div>
            
             <div class="field col-12">
-              <label class="block">Discount<span class="text-danger"> *</span>
+              <label class="block">Discount ( % )<span class="text-danger"> *</span>
               </label>
-              <p-dropdown  formControlName="discount" optionLabel="name"></p-dropdown>
+              <p-dropdown  placeholder="Choose Discount" optionValue="code"  [options]="discount" formControlName="discount" optionLabel="name"></p-dropdown>
               <div *ngIf="f['discount'].invalid && (f['discount'].dirty || f['discount'].touched)">
                 <div *ngIf="f['discount'].hasError('required')" style="color: rgb(225, 82, 82);">
                   This is a required field.
@@ -125,13 +125,38 @@
             <div class="field col-12">
                 <label class="block">Image Product ( Chú ý ảnh đầu tiên được tải lên sẽ chọn mặc định để hiện thị avt sản phẩm)<span class="text-danger"> *</span>
                 </label>
-                    <p-fileUpload name="myfile[]" [customUpload]="true" (uploadHandler)="chooseFile($event)" url="./upload.php" [multiple]="true"
+                    <p-fileUpload [disabled]="isDetail" name="myfile[]" [customUpload]="true" (uploadHandler)="chooseFile($event)" url="./upload.php" [multiple]="true"
                     accept=".png, .jpg, .jpeg">
                        
                     <ng-template pTemplate="content" let-files>
                         <div>
                           <p-progressSpinner class="flex justify-content-center" *ngIf="isLoading"></p-progressSpinner>
                         </div>
+                        <div *ngIf="urlImgDetail.length != 0" >
+                          <!-- <div *ngFor="let item of urlImgDetail; let i = index"  class="p-fluid grid">
+                            <p-image  class="flex justify-content-center" src="{{item}}" alt="Image" [preview]="true" width="250px"></p-image>
+                              <div class="field col-4">
+                                <p-image  class="flex justify-content-center" src="{{item}}" alt="Image" [preview]="true" width="250px"></p-image>
+                              </div>
+                          </div> -->
+                        <p-galleria class="flex justify-content-center"   [value]="urlImgDetail" [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '640px'}" [numVisible]="5"
+                          [circular]="true" [showItemNavigators]="true" [showThumbnails]="false">
+                          <ng-template pTemplate="item" let-item>
+                              <img [src]="item" style="width: 100%; display: block;" />
+                          </ng-template>
+                          <!-- <ng-template pTemplate="thumbnail" let-item>
+                              <div class="grid grid-nogutter justify-content-center">
+                                  <img [src]="item.thumbnailImageSrc" style="display: block;" />
+                              </div>
+                          </ng-template> -->
+                      </p-galleria>
+
+                       
+                        </div>
+                         
+              
+
+
                     </ng-template>
                     
                     </p-fileUpload>

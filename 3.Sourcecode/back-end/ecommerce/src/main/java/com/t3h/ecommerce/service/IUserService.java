@@ -1,8 +1,10 @@
 package com.t3h.ecommerce.service;
 
+import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.entities.core.User;
 import com.t3h.ecommerce.pojo.dto.user.UserDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +21,6 @@ public interface IUserService {
 
 
     ResponseEntity<?> findUser(String textSearch);
+
+    BaseResponse importCustomerData(MultipartFile importFile);
 }

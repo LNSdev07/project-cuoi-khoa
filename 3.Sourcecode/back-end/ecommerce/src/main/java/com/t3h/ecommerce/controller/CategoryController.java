@@ -15,4 +15,12 @@ import javax.validation.Valid;
 @CrossOrigin("http://localhost:4200")
 public class CategoryController {
 
+    @Autowired
+    private CategoryService service;
+
+
+    @GetMapping("/public/categories")
+    public BaseResponse<?> getAllColor(){
+        return service.getAllCategory();
+    }
 }

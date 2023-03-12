@@ -12,4 +12,5 @@ public class ProductAdminRequest {
     private Long quantity;
     private Double cost;
     private Long categoryId;
+
 }

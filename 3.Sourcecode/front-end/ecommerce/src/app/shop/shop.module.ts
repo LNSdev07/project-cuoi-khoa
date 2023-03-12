@@ -14,9 +14,12 @@ import { ProductSingleComponent } from './product-single/product-single.componen
 import { ProfileDetailsComponent } from './profile-details/profile-details.component';
 import {SharedModule} from "../shared/shared.module";
 import { ContactComponent } from './contact/contact.component';
+ 
 import { ShopPageComponent } from './shop-page/shop-page.component';
 import { DataviewComponent } from './shop-page/dataview/dataview.component';
-
+ 
+import { FaqComponent } from './faq/faq.component';
+ 
 @NgModule({
   declarations: [
     ShopComponent,
@@ -28,8 +31,12 @@ import { DataviewComponent } from './shop-page/dataview/dataview.component';
     ProductSingleComponent,
     ProfileDetailsComponent,
     ContactComponent,
+ 
     ShopPageComponent,
-    DataviewComponent
+    DataviewComponent,
+ 
+    FaqComponent
+ 
   ],
     imports: [
         CommonModule,
