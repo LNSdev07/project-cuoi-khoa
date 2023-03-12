@@ -13,6 +13,7 @@ import { QuanLySizeComponent } from './quan-ly-size/quan-ly-size.component';
 import { SharedModule } from '../shared/shared.module';
 import { CreateOrEditProductComponent } from './quan-ly-san-pham/modal/create-or-edit-product/create-or-edit-product.component';
 import { CreateOrEditCategoryComponent } from './quan-ly-danh-muc/modal/create-or-edit-category/create-or-edit-category.component';
+import { CreateOrEditColorComponent } from './quan-ly-color/modal/create-or-edit-color/create-or-edit-color.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { CreateOrEditCategoryComponent } from './quan-ly-danh-muc/modal/create-o
     QuanLySanPhamComponent,
     QuanLySizeComponent,
     CreateOrEditProductComponent,
-    CreateOrEditCategoryComponent
+    CreateOrEditCategoryComponent,
+    CreateOrEditColorComponent
   ],
     imports: [
         CommonModule,

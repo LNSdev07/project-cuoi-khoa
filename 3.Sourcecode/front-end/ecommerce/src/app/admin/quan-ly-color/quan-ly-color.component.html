@@ -70,7 +70,7 @@
   [rowHover]="true"
   [lazy]="true" 
   [value] ="colors"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Category"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Color"
   [rowsPerPageOptions]="[5, 10, 15]"
   sortMode="single"
   sortField=""
@@ -82,11 +82,11 @@
       <th style="width: 3rem">
         <p-tableHeaderCheckbox  ></p-tableHeaderCheckbox>
       </th>
-      <th style="min-width: 100px" pSortableColumn="categoryName">
-        CategoryName<p-sortIcon field="categoryName"></p-sortIcon>
+      <th style="min-width: 100px" pSortableColumn="colorName">
+        ColorName<p-sortIcon field="colorName"></p-sortIcon>
       </th>
-      <th style="min-width: 100px" pSortableColumn="description">
-        Description<p-sortIcon field="description"></p-sortIcon>
+      <th style="min-width: 100px" pSortableColumn="colorCode">
+        ColorCode<p-sortIcon field="colorCode"></p-sortIcon>
       </th>
       <th style="min-width: 180px" pSortableColumn="createdDate">
         CreatedDate<p-sortIcon field="status"></p-sortIcon>
@@ -96,13 +96,13 @@
       </th>
     </tr>
   </ng-template>
-  <ng-template pTemplate="body" let-category>
+  <ng-template pTemplate="body" let-color>
     <tr>
-      <td><p-tableCheckbox [value]="category"></p-tableCheckbox></td>
-      <!-- <td (click)="createOrEdit(category)" class="cursor-pointer underline" style="min-width: 100px">{{ category.categoryName }}</td>
-      <td style="min-width: 100px">{{ category.description }}</td>
-      <td style="min-width: 180px">{{ category.createdDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
-      <td style="min-width: 180px">{{ category.updatedDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td> -->
+      <td><p-tableCheckbox [value]="color"></p-tableCheckbox></td>
+      <td (click)="createOrEdit(color)" class="cursor-pointer underline" style="min-width: 100px">{{ color.colorName }}</td>
+      <td style="min-width: 100px">{{ color.colorCode }}</td>
+      <td style="min-width: 180px">{{ color.createdDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
+      <td style="min-width: 180px">{{ color.updatedDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
    </tr>
 </ng-template>
 <ng-template  pTemplate="emptymessage">
