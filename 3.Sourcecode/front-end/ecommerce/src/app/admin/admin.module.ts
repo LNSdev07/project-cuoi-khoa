@@ -15,6 +15,7 @@ import { CreateOrEditProductComponent } from './quan-ly-san-pham/modal/create-or
 import { CreateOrEditCategoryComponent } from './quan-ly-danh-muc/modal/create-or-edit-category/create-or-edit-category.component';
 import { CreateOrEditColorComponent } from './quan-ly-color/modal/create-or-edit-color/create-or-edit-color.component';
 import { CreateOrEditSizeComponent } from './quan-ly-size/modal/create-or-edit-size/create-or-edit-size.component';
+import { CreateOrEditDiscountComponent } from './quan-ly-discount/modal/create-or-edit-discount/create-or-edit-discount.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { CreateOrEditSizeComponent } from './quan-ly-size/modal/create-or-edit-s
     CreateOrEditProductComponent,
     CreateOrEditCategoryComponent,
     CreateOrEditColorComponent,
-    CreateOrEditSizeComponent
+    CreateOrEditSizeComponent,
+    CreateOrEditDiscountComponent
   ],
     imports: [
         CommonModule,
