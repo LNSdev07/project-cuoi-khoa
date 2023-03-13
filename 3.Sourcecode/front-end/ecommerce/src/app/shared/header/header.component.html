@@ -70,13 +70,14 @@
             <i class="fa fa-angle-double-down" aria-hidden="true"></i>
           </a>
           <ul class="dropdown-menu position-admin-down" aria-labelledby="navbarDropdown5">
-            <li><a routerLink="/dashboard">Dahsboard</a></li>
-            <li><a routerLink="/order">Orders</a></li>
+            <li *ngIf="adminType"><a routerLink="/admin">Managerment Shop</a></li>
+            <br>
+            <!-- <li><a routerLink="/order">Orders</a></li>
             <li><a routerLink="/address">Address</a></li>
             <li><a routerLink="/profile-details">Profile Details</a></li>
             <li><a routerLink="/login">Login Page</a></li>
             <li><a routerLink="/signup">SignUp Page</a></li>
-            <li><a routerLink="/forgot-password">Forgot Password</a></li>
+            <li><a routerLink="/forgot-password">Forgot Password</a></li> -->
             <li>
               <button *ngIf="checkedLogin" (click)="logout()" pButton pRipple  icon="pi pi-power-off"  label="Logout" class="p-button-danger mx-3"></button>
             </li>
