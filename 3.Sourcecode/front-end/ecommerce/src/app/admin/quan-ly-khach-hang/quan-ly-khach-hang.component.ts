@@ -150,6 +150,11 @@ export class QuanLyKhachHangComponent implements OnInit {
         }
   })
  }
+
+ exportExcel(){
+  const fileName = 'customer.xlsx';
+  this.customerService.exportExcel(fileName);
+ }
   
 
 }

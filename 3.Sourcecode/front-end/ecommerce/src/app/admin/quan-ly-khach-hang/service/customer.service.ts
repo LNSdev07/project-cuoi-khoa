@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment';
+import * as saveAs from 'file-saver';
 import { catchError, Observable } from 'rxjs';
 import { HandleErrorService } from 'src/app/common/handle-error/handle-error.service';
 import { BaseReponse } from '../../common/base-response.model';
@@ -14,6 +15,7 @@ export class CustomerService {
   
   private URL_CUSTOMER = environment.API_LOCAL +'/admin/customer'
   private URL_CHANGE_STATUS = environment.API_LOCAL +"/admin/customer"
+  private URL_EXPORT_CUSTOMER = environment.API_LOCAL + '/admin/customer/export'
 
   constructor(private http: HttpClient,
     private handleErr: HandleErrorService) { }
@@ -29,6 +31,13 @@ export class CustomerService {
     return this.http.get<BaseReponse<any>>(url).pipe(
       catchError(this.handleErr.handleError)
     );
+  }
+  public exportExcel(fileName: string){
+    this.http.get(this.URL_EXPORT_CUSTOMER, { responseType: 'blob' }).pipe(
+      catchError(this.handleErr.handleError)
+      ).subscribe(blob => {
+      saveAs(blob, fileName);
+    });
   }
 
 }

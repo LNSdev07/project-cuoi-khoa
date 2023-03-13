@@ -3,21 +3,33 @@ package com.t3h.ecommerce.service.Impl;
 import com.t3h.ecommerce.dto.request.admin_customer.CustomerAdmin;
 import com.t3h.ecommerce.dto.request.admin_customer.CustomerAdminRequest;
 import com.t3h.ecommerce.dto.request.admin_customer.CustomerAdminResponse;
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdmin;
+import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.entities.core.RoleName;
 import com.t3h.ecommerce.entities.core.User;
 import com.t3h.ecommerce.repositories.CustomerRepository;
 import com.t3h.ecommerce.service.CustomerService;
+import com.t3h.ecommerce.utils.ExcelUtils;
+import com.t3h.ecommerce.utils.ExportConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.persistence.EnumType;
+import java.io.ByteArrayInputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +88,42 @@ public class CustomerServiceImpl implements CustomerService {
             }
         }catch (Exception e){
             return BaseResponse.builder().message("request fail").status(HttpStatus.BAD_REQUEST.value()).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<?> exportExcelCustomer() {
+        try{
+            Page<CustomerAdmin> page = repository.findCustomer(
+                    PageRequest.of(0, 1000000),
+                    RoleName.USER, "", -1, ""
+            );
+            if(CollectionUtils.isEmpty(page.getContent())){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            List<CustomerAdminResponse> listCustomers = page.getContent().stream()
+                    .map(CustomerAdminResponse::new).collect(Collectors.toList());
+
+            if(!CollectionUtils.isEmpty(listCustomers)){
+                String fileName = "customer_export"+".xlsx";
+                ByteArrayInputStream in = ExcelUtils.export(listCustomers, ExportConfig.customerExport, fileName);
+                InputStreamResource inputStreamResource = new InputStreamResource(in);
+                return ResponseEntity.ok()
+                        .header(
+                                HttpHeaders.CONTENT_DISPOSITION,
+                                "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+                        )
+                        .contentType(
+                                MediaType.parseMediaType("application/vnd.ms-excel; charset=UTF-8")
+                        )
+                        .body(inputStreamResource);
+            }
+            else{
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }catch (Exception e) {
+            log.info("export fail!");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }
