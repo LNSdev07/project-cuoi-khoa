@@ -17,6 +17,9 @@ public class ProductAdminDTO {
     private Double cost;
     private Long quantity;
     private Long categoryId;
+    private Long colorId;
+    private Long discountId;
+    private Long sizeId;
     private Long createdDate;
     private Long updatedDate;
 

@@ -7,6 +7,9 @@ public interface ProductAdmin {
      Double getCost();
      Long getQuantity();
      Long getCategoryId();
+     Long getColorId();
+     Long getSizeId();
+     Long getDiscountId();
      Long getCreatedDate();
      Long getUpdatedDate();
 }

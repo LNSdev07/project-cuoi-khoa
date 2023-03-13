@@ -35,6 +35,13 @@ public class Category extends BaseEntity {
         this.description = description;
     }
 
+    public Category(Long id, Long createdDate, Long updatedDate, String categoryName, String description) {
+        super(createdDate, updatedDate);
+        this.id = id;
+        this.categoryName = categoryName;
+        this.description = description;
+    }
+
     public Category() {
         super();
     }

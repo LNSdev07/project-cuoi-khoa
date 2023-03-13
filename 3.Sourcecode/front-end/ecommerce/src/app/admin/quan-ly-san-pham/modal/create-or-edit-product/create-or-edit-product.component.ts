@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { forkJoin } from 'rxjs';
 import { ColorModel } from 'src/app/admin/quan-ly-color/model/color.model';
-import { CategoryModel } from 'src/app/admin/quan-ly-danh-muc/model/category.model';
+import { CategoryModel } from 'src/app/admin/quan-ly-danh-muc/model/category-response.model';
 import { DiscountModel } from 'src/app/admin/quan-ly-discount/model/discount.model';
 import { SizeModel } from 'src/app/admin/quan-ly-size/model/size.model';
 import { UpLoadFileService } from 'src/app/common/upload-file/up-load-file.service';

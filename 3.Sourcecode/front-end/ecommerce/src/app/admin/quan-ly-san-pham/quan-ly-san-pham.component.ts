@@ -7,7 +7,6 @@ import { ImportFileComponent } from 'src/app/shared/import-file/import-file.comp
 import { PopupConfirmComponent } from 'src/app/shared/popup-confirm/popup-confirm.component';
 import { FilterDate } from '../common/filter-date.model';
 import { PageRequest } from '../common/page-request.model';
-import { CreateOrEditQuanLyKhachHangComponent } from '../quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang/create-or-edit-quan-ly-khach-hang.component';
 import { CreateOrEditProductComponent } from './modal/create-or-edit-product/create-or-edit-product.component';
 import { ProductAdminReQuestModel } from './model/product-admin-request.model';
 import { ProductAdminResponse } from './model/product-admin-response.model';

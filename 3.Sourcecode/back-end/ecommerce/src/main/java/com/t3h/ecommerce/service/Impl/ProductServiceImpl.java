@@ -310,9 +310,9 @@ public class ProductServiceImpl implements ProductService {
         for(ProductAdminDTO productAdminDTO: productAdminDTOS){
             Category category = categoryRepository.getReferenceById(productAdminDTO.getCategoryId());
 
-            Color color = colorRepository.getReferenceById(1l);
-            Size size = sizeRepository.getReferenceById(1l);
-            Discount discount = discountRepository.getReferenceById(1l);
+            Color color = colorRepository.getReferenceById(productAdminDTO.getColorId());
+            Size size = sizeRepository.getReferenceById(productAdminDTO.getSizeId());
+            Discount discount = discountRepository.getReferenceById(productAdminDTO.getDiscountId());
 
             if(category == null || color == null || size == null || discount == null){
                 log.info("CATEGORY NOT FOUND!");

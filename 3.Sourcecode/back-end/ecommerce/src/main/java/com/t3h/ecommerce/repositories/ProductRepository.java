@@ -24,8 +24,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    @Query("SELECT\n" +
            "    P.id as id, P.productName as productName, P.shortDescription as shortDescription," +
            "P.cost as cost, P.quantity as quantity, P.createdDate as createdDate, P.updatedDate as updatedDate," +
-           " c.id as categoryId\n" +
-           "FROM Product AS P JOIN P.category c\n" +
+           " c.id as categoryId, d.id as discountId, co.id as colorId, s.id as sizeId\n" +
+           "FROM Product AS P JOIN P.category c join P.discount d join P.color co join P.size s\n" +
            "WHERE (c.id =:categoryId or :categoryId=0) " +
            "and (P.productName LIKE concat('%', :productName, '%')) and\n" +
            "((P.quantity between :quantity and :quantity+10) or :quantity=0) and\n" +
@@ -46,6 +46,22 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
    @Modifying
    @Query("delete from Product p where p.id in :ids")
    void deleteProduct(@Param("ids") List<Long> ids);
+
+   @Modifying
+   @Query(value = "delete from product p where p.category_id in :ids", nativeQuery = true)
+   void deleteProductByCategory(@Param("ids") List<Long> ids);
+
+   @Modifying
+   @Query(value = "delete from product p where p.color_id in :ids", nativeQuery = true)
+   void deleteProductByColor(@Param("ids") List<Long> ids);
+
+   @Modifying
+   @Query(value = "delete from product p where p.size_id in :ids" , nativeQuery = true)
+   void deleteProductBySize(@Param("ids") List<Long> ids);
+
+   @Modifying
+   @Query( value = "delete from product p where p.discount_id in :ids",nativeQuery = true)
+   void deleteProductByDiscount(@Param("ids") List<Long> ids);
 
    @Query(value = "select p from Product  p")
    Page<Product> findProductForHome(Pageable pageable);
