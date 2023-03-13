@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
       data!: AvatarModel
       name : any
       avatar : any
+      adminType = false;
 
       constructor(private tokenService: TokenService,
         private logoutService: LogoutService,
@@ -26,6 +27,18 @@ export class HeaderComponent implements OnInit {
       ngOnInit(): void {
         this.checkedLogin = localStorage.getItem(environment.TOKEN_KEY)? true: false;
         this.checkLogin();
+       this.checkUserType();
+
+      }
+
+      checkUserType(){
+        if(JSON.stringify(this.tokenService.getRoles()) === JSON.stringify(["ADMIN"]) ||
+          JSON.stringify(this.tokenService.getRoles()) === JSON.stringify(["ADMIN", "USER"])){
+          this.adminType =  true;
+        }
+        else{
+          this.adminType = false;
+        }
       }
 
       checkLogin(){
