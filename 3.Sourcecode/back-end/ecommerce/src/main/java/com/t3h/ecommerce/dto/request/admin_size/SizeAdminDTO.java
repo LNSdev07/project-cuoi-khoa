@@ -1,22 +1,21 @@
-package com.t3h.ecommerce.pojo.dto.size;
+package com.t3h.ecommerce.dto.request.admin_size;
 
 import com.t3h.ecommerce.entities.product.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SizeDTO {
+public class SizeAdminDTO {
     private Long id;
     private String sizeCode;
     private String sizeName;
     private Long createdDate;
     private Long updatedDate;
 
-    public SizeDTO(Size size){
+    public SizeAdminDTO(Size size){
         BeanUtils.copyProperties(size, this);
     }
 }
