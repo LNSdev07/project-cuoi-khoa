@@ -61,8 +61,11 @@ public class ImportConfig {
         productImportCellConfigs.add(new CellConfig(3, "cost"));
         productImportCellConfigs.add(new CellConfig(4, "quantity"));
         productImportCellConfigs.add(new CellConfig(5, "categoryId"));
-        productImportCellConfigs.add(new CellConfig(6, "createdDate"));
-        productImportCellConfigs.add(new CellConfig(7, "updatedDate"));
+        productImportCellConfigs.add(new CellConfig(6, "colorId"));
+        productImportCellConfigs.add(new CellConfig(7, "sizeId"));
+        productImportCellConfigs.add(new CellConfig(8, "discountId"));
+        productImportCellConfigs.add(new CellConfig(9, "createdDate"));
+        productImportCellConfigs.add(new CellConfig(10, "updatedDate"));
 
         productImport.setCellImportConfigs(productImportCellConfigs);
     }

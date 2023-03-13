@@ -80,7 +80,7 @@
   [rowHover]="true"
   [lazy]="true" 
   [loading]="isLoading"
-  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Customers"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Products"
   [rowsPerPageOptions]="[5, 10, 15]"
   sortMode="single"
   sortField="createdDate"
@@ -106,6 +106,15 @@
       <th style="min-width: 180px" pSortableColumn="categoryId">
         CategotyID<p-sortIcon field="categoryId"></p-sortIcon>
       </th>
+      <th style="min-width: 180px" pSortableColumn="colorId">
+        ColorId<p-sortIcon field="colorId"></p-sortIcon>
+      </th>
+      <th style="min-width: 180px" pSortableColumn="sizeId">
+        SizeId<p-sortIcon field="sizeId"></p-sortIcon>
+      </th>
+      <th style="min-width: 180px" pSortableColumn="discountId">
+        DiscountId<p-sortIcon field="discountId"></p-sortIcon>
+      </th>
       <th style="min-width: 180px" pSortableColumn="createdDate">
         CreatedDate<p-sortIcon field="createdDate"></p-sortIcon>
       </th>
@@ -123,6 +132,9 @@
       <td style="min-width: 180px">{{ product.cost }}</td>
       <td style="min-width: 180px">{{ product.quantity }}</td>
       <td style="min-width: 180px">{{ product.categoryId }}</td>
+      <td style="min-width: 180px">{{ product.colorId }}</td>
+      <td style="min-width: 180px">{{ product.sizeId }}</td>
+      <td style="min-width: 180px">{{ product.discountId }}</td>
       <td style="min-width: 180px">{{ product.createdDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
       <td style="min-width: 180px">{{ product.updatedDate | date: 'dd/MM/yyyy hh:mm:ss' }}</td>
    </tr>

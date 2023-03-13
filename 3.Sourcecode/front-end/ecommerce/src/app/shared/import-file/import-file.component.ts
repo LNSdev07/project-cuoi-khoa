@@ -32,9 +32,9 @@ constructor( private ref: DynamicDialogRef,
   onSave(){
     if(this.URL_IMPORT && this.file){
          this.excelService.importExcelFile(this.file, this.URL_IMPORT).subscribe(res =>{
-          console.log(res)
+          location.reload();
          })
     }
-    this.ref.close(this.URL_IMPORT);
+    this.ref.close();
   }
 }
