@@ -51,8 +51,11 @@ public class ExportConfig {
         productCellConfig.add(new CellConfig(3, "cost"));
         productCellConfig.add(new CellConfig(4, "quantity"));
         productCellConfig.add(new CellConfig(5, "categoryId"));
-        productCellConfig.add(new CellConfig(6, "createdDate"));
-        productCellConfig.add(new CellConfig(7, "updatedDate"));
+        productCellConfig.add(new CellConfig(6, "colorId"));
+        productCellConfig.add(new CellConfig(7, "sizeId"));
+        productCellConfig.add(new CellConfig(8, "discountId"));
+        productCellConfig.add(new CellConfig(9, "createdDate"));
+        productCellConfig.add(new CellConfig(10, "updatedDate"));
         productExport.setCellExportConfigList(productCellConfig);
     }
 }
