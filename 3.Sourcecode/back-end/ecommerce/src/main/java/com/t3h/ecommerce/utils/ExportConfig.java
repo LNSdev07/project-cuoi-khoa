@@ -1,6 +1,7 @@
 package com.t3h.ecommerce.utils;
 
 
+import com.t3h.ecommerce.dto.request.admin_customer.CustomerAdminResponse;
 import com.t3h.ecommerce.dto.request.admin_product.ProductAdminDTO;
 import com.t3h.ecommerce.entities.core.User;
 import com.t3h.ecommerce.pojo.dto.user.UserDTO;
@@ -25,17 +26,19 @@ public class ExportConfig {
         customerExport = new ExportConfig();
         customerExport.setSheetIndex(0);
         customerExport.setStartRow(1);
-        customerExport.setDataClazz(User.class);
+        customerExport.setDataClazz(CustomerAdminResponse.class);
         List<CellConfig> customerCellConfig = new ArrayList<>();
         customerCellConfig.add(new CellConfig(0, "id"));
-        customerCellConfig.add(new CellConfig(1, "username"));
-        customerCellConfig.add(new CellConfig(2, "fullName"));
+        customerCellConfig.add(new CellConfig(1, "fullName"));
+        customerCellConfig.add(new CellConfig(2, "userName"));
         customerCellConfig.add(new CellConfig(3, "phoneNumber"));
         customerCellConfig.add(new CellConfig(4, "gender"));
         customerCellConfig.add(new CellConfig(5, "status"));
         customerCellConfig.add(new CellConfig(6, "address"));
-//        customerCellConfig.add(new CellConfig(7, "email"));
-//        customerCellConfig.add(new CellConfig(8, "avatar"));
+        customerCellConfig.add(new CellConfig(7, "email"));
+        customerCellConfig.add(new CellConfig(8, "createdDate"));
+        customerCellConfig.add(new CellConfig(9, "updatedDate"));
+
         customerExport.setCellExportConfigList(customerCellConfig);
     }
     public static final ExportConfig productExport ;

@@ -5,6 +5,7 @@ import com.t3h.ecommerce.dto.request.admin_customer.CustomerAdminRequest;
 import com.t3h.ecommerce.dto.response.BaseResponse;
 import com.t3h.ecommerce.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,5 +26,10 @@ public class CustomerController {
     public BaseResponse<?> changeStatus(@Valid @RequestParam("ids") String ids,
                                         @Valid @RequestParam("status") String status){
         return service.changeStatus(ids, status);
+    }
+
+    @GetMapping("admin/customer/export")
+    public ResponseEntity<?> exportExcelCustomer(){
+        return service.exportExcelCustomer();
     }
 }
