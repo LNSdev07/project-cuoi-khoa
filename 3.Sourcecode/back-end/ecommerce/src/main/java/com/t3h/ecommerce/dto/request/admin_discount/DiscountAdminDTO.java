@@ -1,4 +1,4 @@
-package com.t3h.ecommerce.pojo.dto.discount;
+package com.t3h.ecommerce.dto.request.admin_discount;
 
 
 import com.t3h.ecommerce.entities.product.Discount;
@@ -8,16 +8,16 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class DiscountDTO {
+@AllArgsConstructor
+public class DiscountAdminDTO {
     private Long id;
-    private Long createdDate;
-    private Long updatedDate;
     private String discountName;
     private Float discountPercent;
+    private Long createdDate;
+    private Long updatedDate;
 
-    public DiscountDTO(Discount discount){
+    public DiscountAdminDTO(Discount discount){
         BeanUtils.copyProperties(discount, this);
     }
 }
