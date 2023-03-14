@@ -277,8 +277,8 @@
            *ngFor="let productDetail of products">
         <div class="product">
           <div class="product-wrap">
-            <a routerLink="/shop/product-single"><img class="img-fluid w-100 mb-3 img-first" src="{{productDetail.imgAvt}}" alt="product-img" /></a>
-            <a routerLink="/shop/product-single"><img class="img-fluid w-100 mb-3 img-second" src="{{productDetail.imgAvt}}" alt="product-img" /></a>
+            <a [routerLink]="['/shop/product-single', productDetail.id]"><img class="img-fluid w-100 mb-3 img-first" src="{{productDetail.imgAvt}}" alt="product-img" /></a>
+            <!-- <a routerLink="/shop/product-single"><img class="img-fluid w-100 mb-3 img-second" src="{{productDetail.imgAvt}}" alt="product-img" /></a> -->
           </div>
 
           <span class="onsale">Sale</span>

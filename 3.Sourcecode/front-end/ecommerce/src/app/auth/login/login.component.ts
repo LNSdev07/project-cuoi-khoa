@@ -77,6 +77,7 @@ export class LoginComponent implements OnInit {
     this.tokenService.setName(res.name);
     this.tokenService.setAvatar(res.avatar);
     this.tokenService.setRoles(res.roles);
+    this.tokenService.setId(String(res.id))
   }
 
   transferData(res: any){

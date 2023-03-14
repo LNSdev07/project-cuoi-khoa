@@ -1,6 +1,7 @@
 package com.t3h.ecommerce.repositories;
 
 
+import com.t3h.ecommerce.entities.product.Color;
 import com.t3h.ecommerce.entities.product.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +35,8 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
     @Modifying
     @Query("delete from Size s where s.id in :ids")
     void deleteSize(@Param("ids") List<Long> ids);
+
+
+    @Query("select s from Size s join s.product p where p.id = :ids")
+    List<Size> findSizeByProductId(@Param("ids") Long id);
 }

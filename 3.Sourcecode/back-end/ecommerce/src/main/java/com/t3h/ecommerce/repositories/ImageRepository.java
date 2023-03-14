@@ -25,4 +25,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Modifying
     @Query(value = "delete from image i where i.product_id in :ids", nativeQuery = true)
     void deleteImageByListProduct(@Param("ids") List<Long> ids);
+
+
 }

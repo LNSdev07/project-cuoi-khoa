@@ -35,4 +35,7 @@ public interface ColorRepository extends JpaRepository<Color, Long> {
     @Modifying
     @Query("delete from Color c where c.id in :ids")
     void deleteColor(@Param("ids") List<Long> ids);
+
+    @Query("select c from Color c join c.product p where p.id = :ids")
+    List<Color> findColorByProductId(@Param("ids") Long id);
 }

@@ -8,6 +8,15 @@ export class TokenService {
   private roles! : string[]
   constructor() { }
 
+  public setId(id: string){
+    localStorage.removeItem(environment.ID)
+    localStorage.setItem(environment.ID, id)
+  }
+
+  public getID(){
+    return localStorage.getItem(environment.ID)
+  }
+
   public setToken(token: string){
     localStorage.removeItem(environment.TOKEN_KEY);
     localStorage.setItem(environment.TOKEN_KEY, token);
@@ -66,6 +75,7 @@ export class TokenService {
     localStorage.removeItem(environment.REFRESH_TOKEN_KEY)
     localStorage.removeItem(environment.ROLE_KEY)
     localStorage.removeItem(environment.TOKEN_KEY)
+    localStorage.removeItem(environment.ID)
   }
 
 }
