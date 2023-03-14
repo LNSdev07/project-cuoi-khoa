@@ -6,6 +6,7 @@ import org.springframework.beans.BeanUtils;
 
 @Data
 public class ProductHomeDTO {
+    private Long id;
     private String productName;
     private String shortDescription;
     private Double cost;

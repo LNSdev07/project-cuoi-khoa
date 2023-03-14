@@ -114,6 +114,7 @@ public class AuthServiceImpl implements AuthService {
             UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
             return new ResponseEntity<>(new JwtResponse(token,
                     refreshToken,
+                    userPrinciple.getId(),
                     userPrinciple.getFullName(),
                     userPrinciple.getAuthorities(),
                     userPrinciple.getAvatar()), HttpStatus.OK);
