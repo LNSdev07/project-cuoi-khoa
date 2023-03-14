@@ -110,7 +110,6 @@ export class ProductSingleComponent implements OnInit{
     this.productDetailService.findReviewProduct(input).subscribe(res =>{
       this.reviewProduct= res.data
       this.totalRecord = res.totalRecords;
-
       console.log(res.data)
     })
   }

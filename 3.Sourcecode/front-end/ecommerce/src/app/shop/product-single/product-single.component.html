@@ -189,8 +189,8 @@
                     </p>
                   </div>
                 </div>
-
-                <p-paginator (onPageChange)="changePage($event)" [rows]="3" [totalRecords]="totalRecord"></p-paginator>
+                <h2 *ngIf="totalRecord <=0" style="text-align: center;">Chưa có nhận xét nào cho sản phẩm này!</h2>
+                <p-paginator *ngIf="totalRecord >0" (onPageChange)="changePage($event)" [rows]="3" [totalRecords]="totalRecord"></p-paginator>
               </div>
 
 
